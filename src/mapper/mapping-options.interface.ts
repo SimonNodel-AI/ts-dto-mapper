@@ -1,3 +1,3 @@
 export interface MappingOptions {
-  keepOriginal: boolean;
+  keepOriginal?: boolean;
 }
