@@ -2,5 +2,32 @@
 {
   "editor.tabSize": 2,
   "editor.formatOnType": true,
-  "typescript.tsdk": "./node_modules/typescript/lib"
+  "typescript.tsdk": "./node_modules/typescript/lib",
+  "editor.rulers": [
+    120
+  ],
+  "editor.mouseWheelZoom": true,
+  "beautify.language": {
+    "js": {
+      "type": [
+        "javascript",
+        "json"
+      ],
+      "filename": [
+        ".jshintrc",
+        ".jsbeautify"
+      ],
+      "ext": [
+        "js", "ts", "json"
+      ],
+    },
+    "css": [
+      "css",
+      "scss"
+    ],
+    "html": [
+      "htm",
+      "html"
+    ]
+  }
 }
