@@ -1,4 +1,6 @@
-import { MappingOptions } from './mapping-options.interface';
+import {
+  MappingOptions
+} from './mapping-options.interface';
 
 const DEFAULT_OPTIONS: MappingOptions = {
   keepOriginal: false
@@ -18,28 +20,28 @@ const DEFAULT_OPTIONS: MappingOptions = {
  * @param {MappingOptions} [mappingOptions] - options for how to handle whole object being mapped
  * @returns
  */
-export function Mapping(name: string, mappingOptions: MappingOptions = {}) {
+export function Mapping( name: string, mappingOptions: MappingOptions = {} ) {
 
-  return function (target: Function) {
+  return function( target: Function ) {
     const original: Function = target;
 
-    function makeDecoratedInstance(constructor: any, args: any[]) {
-      const NewInstance: any = function () {
-        return constructor.apply(this, args);
+    function makeDecoratedInstance( constructor: any, args: any[] ) {
+      const NewInstance: any = function() {
+        return constructor.apply( this, args );
       };
       NewInstance.prototype = constructor.prototype;
       const instance = new NewInstance();
 
       instance._mappingMeta = {
         name,
-        options: resolveMappingOptionsWithDefaults(mappingOptions)
+        options: resolveMappingOptionsWithDefaults( mappingOptions )
       };
 
       return instance;
     }
 
-    const decoratedConstructor: any = function (...args: any[]) {
-      return makeDecoratedInstance(original, args);
+    const decoratedConstructor: any = function( ...args: any[] ) {
+      return makeDecoratedInstance( original, args );
     };
     decoratedConstructor.prototype = original.prototype;
 
@@ -47,7 +49,7 @@ export function Mapping(name: string, mappingOptions: MappingOptions = {}) {
   };
 }
 
-function resolveMappingOptionsWithDefaults(mappingOptions: MappingOptions) {
+function resolveMappingOptionsWithDefaults( mappingOptions: MappingOptions ) {
 
   // Destructure (with default values assigned)
   const {

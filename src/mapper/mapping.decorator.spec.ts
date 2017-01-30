@@ -1,44 +1,53 @@
-import { Mapping } from './mapping.decorator';
-import { MappingOptions } from './mapping-options.interface';
+import {
+  Mapping
+} from './mapping.decorator';
+import {
+  MappingOptions
+} from './mapping-options.interface';
 
 const expectedDecoratorName = 'testDecoratedName';
 
-function createDecoratedInstance(decorator, constructorToBeDecorated) {
-  const decoratedConstructor = decorator(constructorToBeDecorated);
+function createDecoratedInstance( decorator, constructorToBeDecorated ) {
+  const decoratedConstructor = decorator( constructorToBeDecorated );
   return new decoratedConstructor();
 }
 
-describe('Mapping', () => {
+describe( 'Mapping', () => {
 
-  it('should return a decorator function', () => {
-    const decorator = Mapping('testName', { keepOriginal: true });
-    expect(decorator).toBeDefined();
-  });
+  it( 'should return a decorator function', () => {
+    const decorator = Mapping( 'testName', {
+      keepOriginal: true
+    } );
 
-  describe('decorator', () => {
-    const testFunction = function () { };
+    expect( decorator ).toBeDefined();
+  } );
 
-    it('should add _mappingMeta property with default options when no options are provided', () => {
-      const decorator = Mapping(expectedDecoratorName);
+  describe( 'decorator', () => {
+    const testFunction = function() {};
 
-      const result = createDecoratedInstance(decorator, testFunction);
+    it( 'should add _mappingMeta property with default options when no options are provided', () => {
+      const decorator = Mapping( expectedDecoratorName );
 
-      expect(result._mappingMeta).toBeDefined();
-      expect(result._mappingMeta.name).toBe(expectedDecoratorName);
-      expect(result._mappingMeta.options).toBeDefined();
-      expect(result._mappingMeta.options.keepOriginal).toBe(false);
-    });
+      const result = createDecoratedInstance( decorator, testFunction );
 
-    it('should add _mappingMeta property with given mapping option values', () => {
-      const decorator = Mapping(expectedDecoratorName, { keepOriginal: true });
+      expect( result._mappingMeta ).toBeDefined();
+      expect( result._mappingMeta.name ).toBe( expectedDecoratorName );
+      expect( result._mappingMeta.options ).toBeDefined();
+      expect( result._mappingMeta.options.keepOriginal ).toBe( false );
+    } );
 
-      const result = createDecoratedInstance(decorator, testFunction);
+    it( 'should add _mappingMeta property with given mapping option values', () => {
+      const decorator = Mapping( expectedDecoratorName, {
+        keepOriginal: true
+      } );
 
-      expect(result._mappingMeta).toBeDefined();
-      expect(result._mappingMeta.name).toBe(expectedDecoratorName);
-      expect(result._mappingMeta.options).toBeDefined();
-      expect(result._mappingMeta.options.keepOriginal).toBe(true);
-    });
+      const result = createDecoratedInstance( decorator, testFunction );
 
-  });
-});
+      expect( result._mappingMeta ).toBeDefined();
+      expect( result._mappingMeta.name ).toBe( expectedDecoratorName );
+      expect( result._mappingMeta.options ).toBeDefined();
+      expect( result._mappingMeta.options.keepOriginal ).toBe( true );
+    } );
+
+  } );
+} );
