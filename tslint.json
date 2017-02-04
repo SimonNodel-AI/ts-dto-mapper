@@ -22,7 +22,7 @@
     "label-position": true,
     "max-line-length": [
       true,
-      140
+      120
     ],
     "member-access": false,
     "member-ordering": [
@@ -73,8 +73,7 @@
       "always"
     ],
     "triple-equals": [
-      true,
-      "allow-null-check"
+      true
     ],
     "typedef-whitespace": [
       true,
