@@ -1,20 +1,14 @@
+import { getMappingInfo } from './helpers';
+import { MappingMeta } from '../interfaces/mapping-meta.interface';
 import {
   Mapping
-} from './mapping.decorator';
+} from '../mapping.decorator';
 import {
   ajax
 } from 'rxjs/observable/dom/ajax';
 import {
   Mapper
-} from './mapper';
-
-
-const expectedDecoratorName = 'mapperTestDecoratedName';
-
-function createDecoratedInstance( decorator, constructorToBeDecorated ) {
-  const decoratedConstructor = decorator( constructorToBeDecorated );
-  return new decoratedConstructor();
-}
+} from '../mapper';
 
 
 class Foobar {
@@ -44,32 +38,35 @@ describe( 'Mapper', () => {
 
   describe( 'from', () => {
 
-    it( 'should create an instance when given empty object', () => {
-      const mapping = Mapping( expectedDecoratorName );
+    it( 'should create an instance without parameters', () => {
+      const mapping = Mapping();
 
       const mappedInstance = Mapper.from<Foobar>( mapping( Foobar ), {});
+      const mappingInfo = getMappingInfo( mappedInstance );
 
       expect( mappedInstance ).toBeDefined();
-      expect( mappedInstance[ '_mappingMeta' ].name ).toBe( expectedDecoratorName )
+      expect( mappingInfo.name ).toBe( Foobar.name )
       expect( mappedInstance.getFoo() ).toBe( 'fu' );
       expect( mappedInstance.getBar() ).toBe( 'bar' );
-      expect( mappedInstance[ '_mappingMeta' ].original ).toBeUndefined();
+      expect( mappingInfo.original ).toBeUndefined();
     });
 
 
     it( 'should create an instance and save source when keepOriginal is defined', () => {
-      const mapping = Mapping( expectedDecoratorName, {
+      const mapping = Mapping( {
         keepOriginal: true
       });
+
       const source = {
         sourceFoo: 'source_foo'
       };
 
       const mappedInstance = Mapper.from<Foobar>( mapping( Foobar ), source );
+      const mappingInfo = getMappingInfo( mappedInstance );
 
       expect( mappedInstance ).toBeDefined();
-      expect( mappedInstance[ '_mappingMeta' ].name ).toBe( expectedDecoratorName );
-      expect( mappedInstance[ '_mappingMeta' ].original ).toBe( source );
+      expect( mappingInfo.name ).toBe( Foobar.name );
+      expect( mappingInfo.original ).toBe( source );
     });
 
   });

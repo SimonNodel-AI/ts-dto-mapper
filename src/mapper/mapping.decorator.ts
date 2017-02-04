@@ -1,6 +1,8 @@
+import { MappingMeta } from './interfaces/mapping-meta.interface';
 import {
   MappingOptions
-} from './mapping-options.interface';
+} from './interfaces/mapping-options.interface';
+import { MappingInfo } from './interfaces/mapping-info.interface';
 
 const DEFAULT_OPTIONS: MappingOptions = {
   keepOriginal: false
@@ -10,37 +12,36 @@ const DEFAULT_OPTIONS: MappingOptions = {
  * Mapping definition decorator.
  *
  * Usage:
- * @Mapping('Foo', {keepOriginal: true})
+ * @Mapping({keepOriginal: true})
  * class Foo {
  * ...
  * }
  *
  * @export
- * @param {string} name - name of the object mapping
  * @param {MappingOptions} [mappingOptions] - options for how to handle whole object being mapped
- * @returns
+ * @returns {MappingMeta}
  */
-export function Mapping( name: string, mappingOptions: MappingOptions = {} ) {
+export function Mapping( mappingOptions: MappingOptions = {}) {
 
-  return function( target: Function ) {
+  return ( target: Function ) => {
     const original: Function = target;
 
-    function makeDecoratedInstance( constructor: any, args: any[] ) {
-      const NewInstance: any = function() {
+    function makeDecoratedInstance( constructor: any, args: any[] ): MappingMeta {
+      const NewInstance: any = function () {
         return constructor.apply( this, args );
       };
       NewInstance.prototype = constructor.prototype;
       const instance = new NewInstance();
 
-      instance._mappingMeta = {
-        name,
+      instance._mappingMeta = <MappingInfo>{
+        name: constructor.name,
         options: resolveMappingOptionsWithDefaults( mappingOptions )
       };
 
       return instance;
     }
 
-    const decoratedConstructor: any = function( ...args: any[] ) {
+    const decoratedConstructor: any = ( ...args: any[] ) => {
       return makeDecoratedInstance( original, args );
     };
     decoratedConstructor.prototype = original.prototype;
@@ -49,7 +50,7 @@ export function Mapping( name: string, mappingOptions: MappingOptions = {} ) {
   };
 }
 
-function resolveMappingOptionsWithDefaults( mappingOptions: MappingOptions ) {
+function resolveMappingOptionsWithDefaults( mappingOptions: MappingOptions ): MappingOptions {
 
   // Destructure (with default values assigned)
   const {
