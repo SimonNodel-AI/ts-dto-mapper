@@ -6,27 +6,8 @@
     120
   ],
   "editor.mouseWheelZoom": true,
-  "beautify.language": {
-    "js": {
-      "type": [
-        "javascript",
-        "json"
-      ],
-      "filename": [
-        ".jshintrc",
-        ".jsbeautify"
-      ],
-      "ext": [
-        "js", "ts", "json"
-      ],
-    },
-    "css": [
-      "css",
-      "scss"
-    ],
-    "html": [
-      "htm",
-      "html"
-    ]
-  }
+  "less.validate": false,
+  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": true,
+  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": true,
+  "javascript.validate.enable": false
 }
