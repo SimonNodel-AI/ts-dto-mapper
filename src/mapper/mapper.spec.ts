@@ -39,7 +39,7 @@ describe( 'Mapper', () => {
 
   it( 'should be defined', () => {
     expect( Mapper ).toBeDefined();
-  } );
+  });
 
 
   describe( 'from', () => {
@@ -47,31 +47,31 @@ describe( 'Mapper', () => {
     it( 'should create an instance when given empty object', () => {
       const mapping = Mapping( expectedDecoratorName );
 
-      const mappedInstance = Mapper.from < Foobar > ( mapping( Foobar ), {} );
+      const mappedInstance = Mapper.from<Foobar>( mapping( Foobar ), {});
 
       expect( mappedInstance ).toBeDefined();
       expect( mappedInstance[ '_mappingMeta' ].name ).toBe( expectedDecoratorName )
       expect( mappedInstance.getFoo() ).toBe( 'fu' );
       expect( mappedInstance.getBar() ).toBe( 'bar' );
       expect( mappedInstance[ '_mappingMeta' ].original ).toBeUndefined();
-    } );
+    });
 
 
     it( 'should create an instance and save source when keepOriginal is defined', () => {
       const mapping = Mapping( expectedDecoratorName, {
         keepOriginal: true
-      } );
+      });
       const source = {
         sourceFoo: 'source_foo'
       };
 
-      const mappedInstance = Mapper.from < Foobar > ( mapping( Foobar ), source );
+      const mappedInstance = Mapper.from<Foobar>( mapping( Foobar ), source );
 
       expect( mappedInstance ).toBeDefined();
       expect( mappedInstance[ '_mappingMeta' ].name ).toBe( expectedDecoratorName );
       expect( mappedInstance[ '_mappingMeta' ].original ).toBe( source );
-    } );
+    });
 
-  } );
+  });
 
-} );
+});

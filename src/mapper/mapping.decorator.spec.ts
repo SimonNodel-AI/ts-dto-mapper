@@ -17,13 +17,13 @@ describe( 'Mapping', () => {
   it( 'should return a decorator function', () => {
     const decorator = Mapping( 'testName', {
       keepOriginal: true
-    } );
+    });
 
     expect( decorator ).toBeDefined();
-  } );
+  });
 
   describe( 'decorator', () => {
-    const testFunction = function() {};
+    const testFunction = function () { };
 
     it( 'should add _mappingMeta property with default options when no options are provided', () => {
       const decorator = Mapping( expectedDecoratorName );
@@ -34,12 +34,12 @@ describe( 'Mapping', () => {
       expect( result._mappingMeta.name ).toBe( expectedDecoratorName );
       expect( result._mappingMeta.options ).toBeDefined();
       expect( result._mappingMeta.options.keepOriginal ).toBe( false );
-    } );
+    });
 
     it( 'should add _mappingMeta property with given mapping option values', () => {
       const decorator = Mapping( expectedDecoratorName, {
         keepOriginal: true
-      } );
+      });
 
       const result = createDecoratedInstance( decorator, testFunction );
 
@@ -47,7 +47,7 @@ describe( 'Mapping', () => {
       expect( result._mappingMeta.name ).toBe( expectedDecoratorName );
       expect( result._mappingMeta.options ).toBeDefined();
       expect( result._mappingMeta.options.keepOriginal ).toBe( true );
-    } );
+    });
 
-  } );
-} );
+  });
+});
