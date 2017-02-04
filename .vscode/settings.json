@@ -9,5 +9,6 @@
   "less.validate": false,
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": true,
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": true,
-  "javascript.validate.enable": false
+  "javascript.validate.enable": false,
+  "vsicons.presets.angular": true
 }
