@@ -5,7 +5,9 @@ import {
 import { MappingInfo } from './interfaces/mapping-info.interface';
 
 const DEFAULT_OPTIONS: MappingOptions = {
-  keepOriginal: false
+  keepOriginal: false,
+  excludeIfNull: false,
+  excludeIfUndefined: false
 };
 
 /**
@@ -55,11 +57,15 @@ function resolveMappingOptionsWithDefaults( mappingOptions: MappingOptions ): Ma
   // Destructure (with default values assigned)
   const {
     keepOriginal = DEFAULT_OPTIONS.keepOriginal,
+    excludeIfNull = DEFAULT_OPTIONS.excludeIfNull,
+    excludeIfUndefined = DEFAULT_OPTIONS.excludeIfUndefined
   } = mappingOptions;
 
   // Restructure
   mappingOptions = {
-    keepOriginal
+    keepOriginal,
+    excludeIfNull,
+    excludeIfUndefined
   };
 
   return mappingOptions;

@@ -18,4 +18,31 @@ export interface MappingOptions {
    * @memberOf MappingOptions
    */
   keepOriginal?: boolean;
+
+
+  /**
+   * If set to true all mapped properties that are null (and don't have their own excludeIfNull property)
+   * will not be included when mapping back to source object type.
+   *
+   * Note that each mapped property definition can override this setting for itself.
+   *
+   * Default value is false!
+   *
+   * @type {boolean}
+   * @memberOf MappingOptions
+   */
+  excludeIfNull?: boolean;
+
+  /**
+   * If set to true all mapped properties that are undefined (and don't have their own excludeIfUndefined property)
+   * will not be included when mapping back to source object type.
+   *
+   * Note that each mapped property definition can override this setting for itself.
+   *
+   * Default value is false!
+   *
+   * @type {boolean}
+   * @memberOf MappingOptions
+   */
+  excludeIfUndefined?: boolean;
 }

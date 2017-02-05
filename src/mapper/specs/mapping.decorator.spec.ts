@@ -33,9 +33,11 @@ describe( 'Mapping', () => {
       expect( mappingInfo.name ).toBe( testFunction.name );
       expect( mappingInfo.options ).toBeDefined();
       expect( mappingInfo.options.keepOriginal ).toBe( false );
+      expect( mappingInfo.options.excludeIfNull ).toBe( false );
+      expect( mappingInfo.options.excludeIfUndefined ).toBe( false );
     });
 
-    it( 'should add mapping info with given mapping option values', () => {
+    it( 'should add mapping info with keepOriginal parameter', () => {
       const decorator = Mapping( {
         keepOriginal: true
       });
@@ -44,9 +46,31 @@ describe( 'Mapping', () => {
       const mappingInfo = getMappingInfo( mappedInstance );
 
       expect( mappingInfo ).toBeDefined();
-      expect( mappingInfo.name ).toBe( testFunction.name );
-      expect( mappingInfo.options ).toBeDefined();
       expect( mappingInfo.options.keepOriginal ).toBe( true );
+    });
+
+    it( 'should add mapping info with excludeIfNull parameter', () => {
+      const decorator = Mapping( {
+        excludeIfNull: true
+      });
+
+      const mappedInstance = createDecoratedInstance( decorator, testFunction );
+      const mappingInfo = getMappingInfo( mappedInstance );
+
+      expect( mappingInfo ).toBeDefined();
+      expect( mappingInfo.options.excludeIfNull ).toBe( true );
+    });
+
+    it( 'should add mapping info with excludeIfUndefined parameter', () => {
+      const decorator = Mapping( {
+        excludeIfUndefined: true
+      });
+
+      const mappedInstance = createDecoratedInstance( decorator, testFunction );
+      const mappingInfo = getMappingInfo( mappedInstance );
+
+      expect( mappingInfo ).toBeDefined();
+      expect( mappingInfo.options.excludeIfUndefined ).toBe( true );
     });
 
   });
