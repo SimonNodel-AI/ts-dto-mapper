@@ -1,4 +1,5 @@
-import { createDecoratedInstance, getMappingInfo } from './helpers';
+import { getMappingInfo } from '../utils';
+import { createDecoratedInstance } from './helpers';
 import {
   Mapping
 } from '../mapping.decorator';

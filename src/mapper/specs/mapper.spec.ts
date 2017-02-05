@@ -1,4 +1,5 @@
-import { getMappingInfo } from './helpers';
+import { RequiredProperty } from '../required-property.decorator';
+import { getMappingInfo } from '../utils';
 import { MappingMeta } from '../interfaces/mapping-meta.interface';
 import {
   Mapping
@@ -11,23 +12,27 @@ import {
 } from '../mapper';
 
 
-class Foobar {
+class MapperTest {
   private foo: string;
-  private bar: string;
 
-  constructor( foo = 'fu', bar = 'bar' ) {
+  constructor( foo = 'fu' ) {
     this.foo = foo;
-    this.bar = bar;
   }
 
   getFoo() {
     return this.foo;
   }
-
-  getBar() {
-    return this.bar;
-  }
 }
+
+@Mapping()
+class RequiredTest {
+  @RequiredProperty( { path: 'uno' })
+  requiredUno;
+
+  @RequiredProperty( {path: 'nested.fibs[4]'})
+  fifthFib;
+}
+
 
 describe( 'Mapper', () => {
 
@@ -41,13 +46,12 @@ describe( 'Mapper', () => {
     it( 'should create an instance without parameters', () => {
       const mapping = Mapping();
 
-      const mappedInstance = Mapper.from<Foobar>( mapping( Foobar ), {});
+      const mappedInstance = Mapper.from<MapperTest>( mapping( MapperTest ), {});
       const mappingInfo = getMappingInfo( mappedInstance );
 
       expect( mappedInstance ).toBeDefined();
-      expect( mappingInfo.name ).toBe( Foobar.name )
+      expect( mappingInfo.name ).toBe( MapperTest.name );
       expect( mappedInstance.getFoo() ).toBe( 'fu' );
-      expect( mappedInstance.getBar() ).toBe( 'bar' );
       expect( mappingInfo.original ).toBeUndefined();
     });
 
@@ -61,12 +65,29 @@ describe( 'Mapper', () => {
         sourceFoo: 'source_foo'
       };
 
-      const mappedInstance = Mapper.from<Foobar>( mapping( Foobar ), source );
+      const mappedInstance = Mapper.from<MapperTest>( mapping( MapperTest ), source );
       const mappingInfo = getMappingInfo( mappedInstance );
 
       expect( mappedInstance ).toBeDefined();
-      expect( mappingInfo.name ).toBe( Foobar.name );
+      expect( mappingInfo.name ).toBe( MapperTest.name );
       expect( mappingInfo.original ).toBe( source );
+    });
+
+    describe( 'RequiredProperties', () => {
+      const source = {
+        uno: 'one',
+        nested: {
+          fibs: [1, 1, 2, 3, 5, 8]
+        }
+      };
+
+      it( 'should assign correct value from source', () => {
+        const mappedInstance = Mapper.from<RequiredTest>( RequiredTest, source );
+
+        expect( mappedInstance.requiredUno ).toEqual( source.uno );
+        expect( mappedInstance.fifthFib ).toEqual( source.nested.fibs[4] );
+      });
+
     });
 
   });

@@ -36,4 +36,14 @@ export interface MappingInfo {
    * @memberOf MappingInfo
    */
   original?: any;
+
+
+
+  /**
+   * Hash of property names to RequiredProperty definitions
+   *
+   * @type {*}
+   * @memberOf MappingInfo
+   */
+  requiredProperties?: any;
 }

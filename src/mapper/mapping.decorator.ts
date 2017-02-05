@@ -35,10 +35,15 @@ export function Mapping( mappingOptions: MappingOptions = {}) {
       NewInstance.prototype = constructor.prototype;
       const instance = new NewInstance();
 
-      instance._mappingMeta = <MappingInfo>{
-        name: constructor.name,
-        options: resolveMappingOptionsWithDefaults( mappingOptions )
-      };
+      if ( !instance._mappingMeta ) {
+        instance._mappingMeta = <MappingInfo>{
+          name: constructor.name,
+          options: resolveMappingOptionsWithDefaults( mappingOptions )
+        };
+      } else {
+        instance._mappingMeta.name = constructor.name;
+        instance._mappingMeta.options = resolveMappingOptionsWithDefaults( mappingOptions );
+      }
 
       return instance;
     }
