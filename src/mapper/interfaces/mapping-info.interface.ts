@@ -1,3 +1,4 @@
+import { RequiredPropertyOptions } from './required-property-options.interface';
 import { MappingOptions } from './mapping-options.interface';
 
 
@@ -42,8 +43,8 @@ export interface MappingInfo {
   /**
    * Hash of property names to RequiredProperty definitions
    *
-   * @type {*}
+   * @type {{[ name: string ]: RequiredPropertyOptions }}
    * @memberOf MappingInfo
    */
-  requiredProperties?: any;
+  requiredProperties?: { [ name: string ]: RequiredPropertyOptions };
 }

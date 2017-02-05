@@ -41,9 +41,9 @@ describe( 'RequiredProperty', () => {
       const requiredProperties = getRequiredProperties( instance );
 
       expect( requiredProperties ).toBeDefined();
-      expect( requiredProperties.pathOnly.path ).toBe( 'boom' );
-      expect( requiredProperties.pathOnly.excludeIfNull ).toBe( false );
-      expect( requiredProperties.pathOnly.excludeIfUndefined ).toBe( false );
+      expect( requiredProperties[ 'pathOnly' ].path ).toBe( 'boom' );
+      expect( requiredProperties[ 'pathOnly' ].excludeIfNull ).toBe( false );
+      expect( requiredProperties[ 'pathOnly' ].excludeIfUndefined ).toBe( false );
     });
 
     it( 'should add mapping info with excludeIfNull', () => {
@@ -51,8 +51,8 @@ describe( 'RequiredProperty', () => {
       const requiredProperties = getRequiredProperties( instance );
 
       expect( requiredProperties ).toBeDefined();
-      expect( requiredProperties.excludeNull.path ).toBe( 'excludeNull' );
-      expect( requiredProperties.excludeNull.excludeIfNull ).toBe( true );
+      expect( requiredProperties[ 'excludeNull' ].path ).toBe( 'excludeNull' );
+      expect( requiredProperties[ 'excludeNull' ].excludeIfNull ).toBe( true );
     });
 
     it( 'should add mapping info with excludeIfUndefined', () => {
@@ -60,8 +60,8 @@ describe( 'RequiredProperty', () => {
       const requiredProperties = getRequiredProperties( instance );
 
       expect( requiredProperties ).toBeDefined();
-      expect( requiredProperties.excludeUndefined.path ).toBe( 'excludeUndefined' );
-      expect( requiredProperties.excludeUndefined.excludeIfUndefined ).toBe( true );
+      expect( requiredProperties[ 'excludeUndefined' ].path ).toBe( 'excludeUndefined' );
+      expect( requiredProperties[ 'excludeUndefined' ].excludeIfUndefined ).toBe( true );
     });
 
   });
