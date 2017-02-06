@@ -59,12 +59,18 @@ function assignRequiredPropertiesToResult( instance: any, result: any, meta: Map
 
   each( meta.requiredProperties, ( property, name ) => {
     const value = instance[ name ];
-    if ( isUndefined( value ) && property.excludeIfUndefined ) {
+    if ( isUndefined( value ) && shouldBeExcluded( property.excludeIfUndefined, meta.options.excludeIfUndefined ) ) {
       return true;
-    } else if ( isNull( value ) && property.excludeIfNull ) {
+    } else if ( isNull( value ) && shouldBeExcluded( property.excludeIfNull, meta.options.excludeIfNull ) ) {
       return true;
     }
     set( result, property.path, value );
   });
 }
 
+function shouldBeExcluded( propertyExclusionValue, metaOptionsExclusionFlag ) {
+  if ( propertyExclusionValue === true ) {
+    return true;
+  }
+  return ( propertyExclusionValue === false ) ? false : metaOptionsExclusionFlag;
+}

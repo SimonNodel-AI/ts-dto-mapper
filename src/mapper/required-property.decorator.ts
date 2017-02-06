@@ -4,8 +4,8 @@ import { RequiredPropertyOptions } from './interfaces/required-property-options.
 
 const DEFAULT_OPTIONS: RequiredPropertyOptions = {
   path: '',
-  excludeIfNull: false,
-  excludeIfUndefined: false
+  excludeIfNull: undefined,
+  excludeIfUndefined: undefined
 };
 
 

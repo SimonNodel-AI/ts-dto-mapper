@@ -21,7 +21,7 @@ export interface RequiredPropertyOptions {
   /**
    * If set to true null value will not be included when mapping back to source object type.
    *
-   * Default value is false!
+   * If not defined then MappingOptions.excludeIfNull will be used
    *
    * @type {boolean}
    * @memberOf MappingOptions
@@ -31,7 +31,7 @@ export interface RequiredPropertyOptions {
   /**
    * If set to true undefined value will not be included when mapping back to source object type.
    *
-   * Default value is false!
+   * If not defined then MappingOptions.excludeIfUndefined will be used
    *
    * @type {boolean}
    * @memberOf MappingOptions

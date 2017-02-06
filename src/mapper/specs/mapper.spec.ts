@@ -1,3 +1,6 @@
+import { RequiredPropertyOptions } from '../interfaces/required-property-options.interface';
+import { MappingOptions } from '../interfaces/mapping-options.interface';
+import { setupTestingRouter } from '@angular/router/testing';
 import { RequiredProperty } from '../required-property.decorator';
 import { getMappingInfo } from '../utils';
 import { MappingMeta } from '../interfaces/mapping-meta.interface';
@@ -48,12 +51,27 @@ const keepOriginalMapping = Mapping( {
   keepOriginal: true
 });
 
+const noOriginalMapping = Mapping( {
+  keepOriginal: false
+});
+
 const sourceWithNestedFibs = {
   uno: 'one',
   nested: {
     fibs: [ 1, 1, 2, 3, 5, 8 ]
   }
 };
+
+function generateRequiredTestMappedInstance(
+  mappingOptions: MappingOptions, requiredOptions: RequiredPropertyOptions, source: any ) {
+
+  @Mapping( mappingOptions )
+  class Test {
+    @RequiredProperty( requiredOptions )
+    requiredValue;
+  }
+  return Mapper.from<Test>( Test, source );
+}
 
 describe( 'Mapper', () => {
 
@@ -117,7 +135,7 @@ describe( 'Mapper', () => {
       };
 
       mappedInstance = Mapper.from<ClassWithRequiredMappedFoo>(
-        keepOriginalMapping( ClassWithRequiredMappedFoo ),
+        noOriginalMapping( ClassWithRequiredMappedFoo ),
         source );
 
       next();
@@ -130,6 +148,9 @@ describe( 'Mapper', () => {
     });
 
     it( 'should have all unmapped source properties if keepOriginal is true', () => {
+      mappedInstance = Mapper.from<ClassWithRequiredMappedFoo>(
+        keepOriginalMapping( ClassWithRequiredMappedFoo ),
+        source );
       const result = Mapper.toSource( mappedInstance );
 
       expect( result.abc ).toBe( source.abc );
@@ -139,6 +160,8 @@ describe( 'Mapper', () => {
 
     it( 'should include a null value for mapped property if excludeIfNull is false', () => {
       mappedInstance.fooValue = null;
+      const mappingMeta = getMappingInfo( mappedInstance );
+      mappingMeta.requiredProperties[ 'fooValue' ].excludeIfNull = false;
       const result = Mapper.toSource( mappedInstance );
 
       expect( result.foo ).toBeNull();
@@ -148,7 +171,6 @@ describe( 'Mapper', () => {
       mappedInstance.fooValue = null;
       const mappingMeta = getMappingInfo( mappedInstance );
       mappingMeta.requiredProperties[ 'fooValue' ].excludeIfNull = true;
-      delete source.foo;
 
       const result = Mapper.toSource( mappedInstance );
 
@@ -157,6 +179,8 @@ describe( 'Mapper', () => {
 
     it( 'should include an undefined value for mapped property if excludeIfUndefined is false', () => {
       mappedInstance.fooValue = undefined;
+      const mappingMeta = getMappingInfo( mappedInstance );
+      mappingMeta.requiredProperties[ 'fooValue' ].excludeIfUndefined = false;
       const result = Mapper.toSource( mappedInstance );
 
       expect( result.foo ).toBeUndefined();
@@ -167,12 +191,32 @@ describe( 'Mapper', () => {
       mappedInstance.fooValue = undefined;
       const mappingMeta = getMappingInfo( mappedInstance );
       mappingMeta.requiredProperties[ 'fooValue' ].excludeIfUndefined = true;
-      delete source.foo;
+
+      const result = Mapper.toSource( mappedInstance );
+
+      expect( result.hasOwnProperty( 'foo' ) ).toBe( false );
+    });
+
+    it( 'should exclude an undefined value for mapped property if mappingOptions.excludeIfUndefined is true', () => {
+      mappedInstance.fooValue = undefined;
+      const mappingMeta = getMappingInfo( mappedInstance );
+      mappingMeta.options.excludeIfUndefined = true;
 
       const result = Mapper.toSource( mappedInstance );
 
 
       expect( result.hasOwnProperty( 'foo' ) ).toBe( false );
+    });
+
+    it( 'should include an undefined value for mapped property if mappingOptions.excludeIfUndefined is false', () => {
+      const mapped = generateRequiredTestMappedInstance( { excludeIfUndefined: false }, { path: 'foo' },
+        { foo: 'bar' });
+
+      mapped.requiredValue = undefined;
+      const result = Mapper.toSource( mapped );
+
+      expect( result.hasOwnProperty( 'foo' ) ).toBe( true );
+      expect( result.foo ).toBeUndefined();
     });
 
     it( 'should update nested source properties', () => {
@@ -183,7 +227,7 @@ describe( 'Mapper', () => {
       mappedInstance.fifthFib = 42;
       const result = Mapper.toSource( mappedInstance );
 
-      expect( result.nested.fibs[4] ).toEqual( 42 );
+      expect( result.nested.fibs[ 4 ] ).toEqual( 42 );
     });
 
   });

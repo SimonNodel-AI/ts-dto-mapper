@@ -42,8 +42,8 @@ describe( 'RequiredProperty', () => {
 
       expect( requiredProperties ).toBeDefined();
       expect( requiredProperties[ 'pathOnly' ].path ).toBe( 'boom' );
-      expect( requiredProperties[ 'pathOnly' ].excludeIfNull ).toBe( false );
-      expect( requiredProperties[ 'pathOnly' ].excludeIfUndefined ).toBe( false );
+      expect( requiredProperties[ 'pathOnly' ].excludeIfNull ).toBeUndefined();
+      expect( requiredProperties[ 'pathOnly' ].excludeIfUndefined ).toBeUndefined();
     });
 
     it( 'should add mapping info with excludeIfNull', () => {
