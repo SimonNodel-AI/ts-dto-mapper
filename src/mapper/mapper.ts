@@ -2,7 +2,7 @@ import { MappingMeta } from './interfaces/mapping-meta.interface';
 import { RequiredPropertyOptions } from './interfaces/required-property-options.interface';
 import { MappingInfo } from './interfaces/mapping-info.interface';
 import { getMappingInfo } from './utils';
-import { each, get, set, isUndefined, isNull } from 'lodash';
+import { each, get, set, unset, isUndefined, isNull } from 'lodash';
 
 
 export class Mapper {
@@ -57,11 +57,13 @@ function assignRequiredPropertiesToResult( instance: any, result: any, meta: Map
     return;
   }
 
-  each( meta.requiredProperties, ( property, name ) => {
-    const value = instance[ name ];
+  each( meta.requiredProperties, ( property, propertyName ) => {
+    const value = instance[ propertyName ];
     if ( isUndefined( value ) && shouldBeExcluded( property.excludeIfUndefined, meta.options.excludeIfUndefined ) ) {
+      unset( result, property.path );
       return true;
     } else if ( isNull( value ) && shouldBeExcluded( property.excludeIfNull, meta.options.excludeIfNull ) ) {
+      unset( result, property.path );
       return true;
     }
     set( result, property.path, value );
@@ -72,5 +74,5 @@ function shouldBeExcluded( propertyExclusionValue, metaOptionsExclusionFlag ) {
   if ( propertyExclusionValue === true ) {
     return true;
   }
-  return ( propertyExclusionValue === false ) ? false : metaOptionsExclusionFlag;
+  return ( isUndefined( propertyExclusionValue ) ) ? metaOptionsExclusionFlag : false;
 }
