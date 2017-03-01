@@ -46,7 +46,7 @@ function assignRequiredValuesFromSource( instance: any, source: any, meta: Mappi
   each( meta.requiredProperties, ( property, name ) => {
     const value = get( source, property.path, undefined );
     if ( isUndefined( value ) ) {
-      throw new Error( `Required mapping ${name} property was not found for ${meta.name}` );
+      throw new Error( `Required property value "${property.path}"=>${name} was not found for ${meta.name}` );
     }
     instance[ name ] = value;
   });
