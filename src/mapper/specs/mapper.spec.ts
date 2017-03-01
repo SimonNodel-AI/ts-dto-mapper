@@ -73,6 +73,16 @@ describe( 'Mapper', () => {
         expect( mappedInstance.fifthFib ).toEqual( sourceWithNestedFibs.nested.fibs[ 4 ] );
       });
 
+      it( 'should throw an error if required property is not defined', () => {
+        expect( () => {
+          Mapper.from<ClassWithDefaultDecoratorAndRequiredNestedProperty>(
+            ClassWithDefaultDecoratorAndRequiredNestedProperty, {} );
+        }).toThrow(
+          // tslint:disable-next-line:max-line-length
+          Error('Required property value "nested.fibs[4]"=>fifthFib was not found for ClassWithDefaultDecoratorAndRequiredNestedProperty' )
+        );
+      });
+
     });
 
   });
