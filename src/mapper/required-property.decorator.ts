@@ -5,7 +5,8 @@ import { RequiredPropertyOptions } from './interfaces/required-property-options.
 const DEFAULT_OPTIONS: RequiredPropertyOptions = {
   path: '',
   excludeIfNull: undefined,
-  excludeIfUndefined: undefined
+  excludeIfUndefined: undefined,
+  readOnly: false
 };
 
 
@@ -29,15 +30,17 @@ export function RequiredProperty( options: RequiredPropertyOptions ) {
 
     ensureMappingMetaIsDefined( target );
     target._mappingMeta.requiredProperties[ key ] = resolveOptionsWithDefaults( options );
-
-    let value = this[ key ];
+    target._mappingMeta.requiredPropertyValues[ key ] = this[ key ];
 
     const getter = function getter() {
-      return value;
+      return target._mappingMeta.requiredPropertyValues[ key ];
     };
 
     const setter = function setter( newValue ) {
-      value = newValue;
+      if ( options.readOnly ) {
+        throw new Error( `Cannot assign a value to read-only property "${key}"!` );
+      }
+      target._mappingMeta.requiredPropertyValues[ key ] = newValue;
     };
 
     if ( delete this[ key ] ) {
@@ -46,7 +49,7 @@ export function RequiredProperty( options: RequiredPropertyOptions ) {
         set: setter,
         enumerable: true,
         configurable: true
-      });
+      } );
     }
   };
 }
@@ -61,14 +64,16 @@ function resolveOptionsWithDefaults( options: RequiredPropertyOptions ): Require
   const {
     path = DEFAULT_OPTIONS.path,
     excludeIfNull = DEFAULT_OPTIONS.excludeIfNull,
-    excludeIfUndefined = DEFAULT_OPTIONS.excludeIfUndefined
+    excludeIfUndefined = DEFAULT_OPTIONS.excludeIfUndefined,
+    readOnly = DEFAULT_OPTIONS.readOnly
   } = options;
 
   // Restructure
   options = {
     path,
     excludeIfNull,
-    excludeIfUndefined
+    excludeIfUndefined,
+    readOnly
   };
 
   return options;

@@ -5,28 +5,30 @@ import { RequiredProperty } from '../required-property.decorator';
 import { getMappingInfo } from '../utils';
 import { MappingMeta } from '../interfaces/mapping-meta.interface';
 import { Mapping } from '../mapping.decorator';
-import { Mapper} from '../mapper';
+import { Mapper } from '../mapper';
 import {
   ClassWithDefaultDecorator,
-  ClassWithKeepOriginal,
-  ClassWithDefaultDecoratorAndRequiredProperty,
   ClassWithDefaultDecoratorAndRequiredNestedProperty,
-  ClassWithKeepOriginalAndRequiredProperty,
-  ClassWithKeepOriginalAndRequiredNestedProperty
+  ClassWithDefaultDecoratorAndRequiredProperty,
+  ClassWithDefaultDecoratorAndRequiredReadOnlyProperty,
+  ClassWithKeepOriginal,
+  ClassWithKeepOriginalAndRequiredNestedProperty,
+  ClassWithKeepOriginalAndRequiredProperty
 } from './mapper.test-classes';
 
 const sourceWithNestedFibs = {
   uno: 'one',
   nested: {
     fibs: [ 1, 1, 2, 3, 5, 8 ]
-  }
+  },
+  important: 'Life is important'
 };
 
 describe( 'Mapper', () => {
 
   it( 'should be defined', () => {
     expect( Mapper ).toBeDefined();
-  });
+  } );
 
 
   describe( 'from', () => {
@@ -34,14 +36,14 @@ describe( 'Mapper', () => {
     it( 'should create an instance without parameters', () => {
       const mapping = Mapping();
 
-      const mappedInstance = Mapper.from<ClassWithDefaultDecorator>( ClassWithDefaultDecorator, {});
+      const mappedInstance = Mapper.from<ClassWithDefaultDecorator>( ClassWithDefaultDecorator, {} );
       const mappingInfo = getMappingInfo( mappedInstance );
 
       expect( mappedInstance ).toBeDefined();
       expect( mappingInfo.name ).toBe( 'ClassWithDefaultDecorator' );
       expect( mappedInstance.getFoo() ).toBe( 'DD' );
       expect( mappingInfo.original ).toBeUndefined();
-    });
+    } );
 
 
     it( 'should create an instance and save source when keepOriginal is defined', () => {
@@ -55,7 +57,7 @@ describe( 'Mapper', () => {
       expect( mappedInstance ).toBeDefined();
       expect( mappingInfo.name ).toBe( 'ClassWithKeepOriginal' );
       expect( mappingInfo.original ).toBe( source );
-    });
+    } );
 
     describe( 'RequiredProperties', () => {
 
@@ -64,28 +66,40 @@ describe( 'Mapper', () => {
           ClassWithDefaultDecoratorAndRequiredProperty, sourceWithNestedFibs );
 
         expect( mappedInstance.requiredUno ).toEqual( sourceWithNestedFibs.uno );
-      });
+      } );
 
-       it( 'should assign correct value from source for nested property', () => {
+      it( 'should assign correct value from source for nested property', () => {
         const mappedInstance = Mapper.from<ClassWithDefaultDecoratorAndRequiredNestedProperty>(
           ClassWithDefaultDecoratorAndRequiredNestedProperty, sourceWithNestedFibs );
 
         expect( mappedInstance.fifthFib ).toEqual( sourceWithNestedFibs.nested.fibs[ 4 ] );
-      });
+      } );
 
       it( 'should throw an error if required property is not defined', () => {
-        expect( () => {
+        expect(() => {
           Mapper.from<ClassWithDefaultDecoratorAndRequiredNestedProperty>(
             ClassWithDefaultDecoratorAndRequiredNestedProperty, {} );
-        }).toThrow(
+        } ).toThrow(
           // tslint:disable-next-line:max-line-length
-          Error('Required property value "nested.fibs[4]"=>fifthFib was not found for ClassWithDefaultDecoratorAndRequiredNestedProperty' )
-        );
-      });
+          Error( 'Required property value "nested.fibs[4]"=>fifthFib was not found for ClassWithDefaultDecoratorAndRequiredNestedProperty' )
+          );
+      } );
 
-    });
+      it( 'should throw an error if client attempt to change read-only property', () => {
+        const mappedInstance = Mapper.from<ClassWithDefaultDecoratorAndRequiredReadOnlyProperty>(
+          ClassWithDefaultDecoratorAndRequiredReadOnlyProperty, sourceWithNestedFibs );
 
-  });
+        expect( mappedInstance.doNotTouchThis ).toEqual( 'Life is important' );
+        expect(() => {
+          mappedInstance.doNotTouchThis = 'fuBar';
+        } ).toThrow(
+          Error( 'Cannot assign a value to read-only property "doNotTouchThis"!' )
+          );
+      } );
+
+    } );
+
+  } );
 
 
   describe( 'toSource', () => {
@@ -109,13 +123,13 @@ describe( 'Mapper', () => {
       mappingMeta = getMappingInfo( mappedInstance );
 
       next();
-    });
+    } );
 
     it( 'should throw if given object without mapping meta', () => {
       expect(() => {
         Mapper.toSource( {} );
-      }).toThrow( Error( 'Mapping metadata is missing for given object' ) );
-    });
+      } ).toThrow( Error( 'Mapping metadata is missing for given object' ) );
+    } );
 
     it( 'should have all unmapped source properties if keepOriginal is true', () => {
       const result = Mapper.toSource( mappedInstance );
@@ -124,7 +138,7 @@ describe( 'Mapper', () => {
       expect( result.list ).toBe( source.list );
       expect( result.foo ).toEqual( source.foo );
       expect( result.uno ).toEqual( mappedInstance.requiredUno );
-    });
+    } );
 
     it( 'should include a null value for mapped property if excludeIfNull is false', () => {
       mappedInstance.requiredUno = null;
@@ -133,7 +147,7 @@ describe( 'Mapper', () => {
       const result = Mapper.toSource( mappedInstance );
 
       expect( result.uno ).toBeNull();
-    });
+    } );
 
     it( 'should exclude a null value for mapped property if excludeIfNull is true', () => {
       mappedInstance.requiredUno = null;
@@ -142,7 +156,7 @@ describe( 'Mapper', () => {
       const result = Mapper.toSource( mappedInstance );
 
       expect( result.uno ).toBeUndefined();
-    });
+    } );
 
     it( 'should include an undefined value for mapped property if excludeIfUndefined is false', () => {
       mappedInstance.requiredUno = undefined;
@@ -152,7 +166,7 @@ describe( 'Mapper', () => {
 
       expect( result.uno ).toBeUndefined();
       expect( result.hasOwnProperty( 'uno' ) ).toBe( true );
-    });
+    } );
 
     it( 'should exclude an undefined value for mapped property if excludeIfUndefined is true', () => {
       mappedInstance.requiredUno = undefined;
@@ -161,7 +175,7 @@ describe( 'Mapper', () => {
       const result = Mapper.toSource( mappedInstance );
 
       expect( result.hasOwnProperty( 'uno' ) ).toBe( false );
-    });
+    } );
 
     // tslint:disable-next-line:max-line-length
     it( 'should exclude an undefined value for mapped property if excludeIfUndefined is undefined and mappingOptions.excludeIfUndefined is true', () => {
@@ -173,7 +187,7 @@ describe( 'Mapper', () => {
 
 
       expect( result.hasOwnProperty( 'uno' ) ).toBe( false );
-    });
+    } );
 
     // tslint:disable-next-line:max-line-length
     it( 'should include an undefined value for mapped property if excludeIfUndefined is undefined and mappingOptions.excludeIfUndefined is false', () => {
@@ -185,7 +199,7 @@ describe( 'Mapper', () => {
 
       expect( result.hasOwnProperty( 'uno' ) ).toBe( true );
       expect( result.uno ).toBeUndefined();
-    });
+    } );
 
     it( 'should update nested source properties', () => {
       mappedInstance = Mapper.from<ClassWithKeepOriginalAndRequiredNestedProperty>(
@@ -196,8 +210,18 @@ describe( 'Mapper', () => {
       const result = Mapper.toSource( mappedInstance );
 
       expect( result.nested.fibs[ 4 ] ).toEqual( 42 );
-    });
+    } );
 
-  });
+    it( 'should include read-only value', () => {
+      mappedInstance = Mapper.from<ClassWithDefaultDecoratorAndRequiredReadOnlyProperty>(
+        ClassWithDefaultDecoratorAndRequiredReadOnlyProperty,
+        sourceWithNestedFibs );
 
-});
+      const result = Mapper.toSource( mappedInstance );
+
+      expect( result.important ).toEqual( 'Life is important' );
+    } );
+
+  } );
+
+} );

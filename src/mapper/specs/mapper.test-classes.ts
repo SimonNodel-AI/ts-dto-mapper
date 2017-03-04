@@ -28,6 +28,12 @@ export class ClassWithDefaultDecoratorAndRequiredNestedProperty {
   fifthFib;
 }
 
+@Mapping()
+export class ClassWithDefaultDecoratorAndRequiredReadOnlyProperty {
+  @RequiredProperty( { path: 'important', readOnly: true })
+  doNotTouchThis;
+}
+
 
 @Mapping({keepOriginal: true})
 export class ClassWithKeepOriginal {
