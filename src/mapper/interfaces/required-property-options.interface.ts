@@ -7,7 +7,6 @@
  */
 export interface RequiredPropertyOptions {
 
-
   /**
    * Path of where to extract value in source object during mapping operation.
    *
@@ -24,7 +23,7 @@ export interface RequiredPropertyOptions {
    * If not defined then MappingOptions.excludeIfNull will be used
    *
    * @type {boolean}
-   * @memberOf MappingOptions
+   * @memberOf RequiredPropertyOptions
    */
   excludeIfNull?: boolean;
 
@@ -34,7 +33,16 @@ export interface RequiredPropertyOptions {
    * If not defined then MappingOptions.excludeIfUndefined will be used
    *
    * @type {boolean}
-   * @memberOf MappingOptions
+   * @memberOf RequiredPropertyOptions
    */
   excludeIfUndefined?: boolean;
+
+
+  /**
+   * If set to true the property, the property will be read-only.  (Defaults to false)
+   *
+   * @type {boolean}
+   * @memberOf RequiredPropertyOptions
+   */
+  readOnly?: boolean;
 }

@@ -47,4 +47,13 @@ export interface MappingInfo {
    * @memberOf MappingInfo
    */
   requiredProperties?: { [ name: string ]: RequiredPropertyOptions };
+
+
+  /**
+   * Value storage for required properties.
+   *
+   * @type {{ [name: string ]: any }}
+   * @memberOf MappingInfo
+   */
+  requiredPropertyValues?: { [name: string ]: any };
 }
