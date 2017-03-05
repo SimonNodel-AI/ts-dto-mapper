@@ -1,3 +1,4 @@
+import { OptionalProperty } from '../optional-property.decorator';
 import { RequiredProperty } from '../required-property.decorator';
 import { Mapping } from '../mapping.decorator';
 
@@ -17,25 +18,50 @@ export class ClassWithDefaultDecorator {
 
 @Mapping()
 export class ClassWithDefaultDecoratorAndRequiredProperty {
-  @RequiredProperty( { path: 'uno' })
+  @RequiredProperty( { path: 'uno' } )
   requiredUno;
 }
 
+@Mapping()
+export class ClassWithDefaultDecoratorAndOptionalProperty {
+  @OptionalProperty( { path: 'dos' } )
+  optionalDos;
+}
 
 @Mapping()
 export class ClassWithDefaultDecoratorAndRequiredNestedProperty {
-  @RequiredProperty( { path: 'nested.fibs[4]' })
+  @RequiredProperty( { path: 'nested.fibs[4]' } )
   fifthFib;
 }
 
 @Mapping()
-export class ClassWithDefaultDecoratorAndRequiredReadOnlyProperty {
-  @RequiredProperty( { path: 'important', readOnly: true })
-  doNotTouchThis;
+export class ClassWithDefaultDecoratorAndOptionalNestedProperty {
+  @OptionalProperty( { path: 'nested.fibs[3]' } )
+  forthFib;
 }
 
+@Mapping()
+export class ClassWithDefaultDecoratorAndReadOnlyProperties {
+  @RequiredProperty( { path: 'important', readOnly: true } )
+  doNotTouchThis;
 
-@Mapping({keepOriginal: true})
+  @OptionalProperty( { path: 'smart', readOnly: true } )
+  doNotTouchThisValue;
+}
+
+@Mapping()
+export class ClassWithDefaultDecoratorAndOptionalReadOnlyProperty {
+  @OptionalProperty( { path: 'alsoImportant', readOnly: true } )
+  doNotTouchThisTwo;
+}
+
+@Mapping()
+export class ClassWithDefaultDecoratorAndOptionalPropertyWithDefault {
+  @OptionalProperty( { path: 'cooper', defaultValue: 33 } )
+  aDefaultValue;
+}
+
+@Mapping( { keepOriginal: true } )
 export class ClassWithKeepOriginal {
 
   private foo: string;
@@ -50,14 +76,20 @@ export class ClassWithKeepOriginal {
 }
 
 
-@Mapping({keepOriginal: true})
-export class ClassWithKeepOriginalAndRequiredProperty {
-  @RequiredProperty( { path: 'uno' })
+@Mapping( { keepOriginal: true } )
+export class ClassWithKeepOriginalAndRequiredAndOptionalProperties {
+  @RequiredProperty( { path: 'uno' } )
   requiredUno;
+
+  @OptionalProperty( { path: 'dos' } )
+  optionalDos;
 }
 
-@Mapping({keepOriginal: true})
-export class ClassWithKeepOriginalAndRequiredNestedProperty {
-  @RequiredProperty( { path: 'nested.fibs[4]' })
+@Mapping( { keepOriginal: true } )
+export class ClassWithKeepOriginalAndRequiredAndOptionalNestedProperties {
+  @RequiredProperty( { path: 'nested.fibs[4]' } )
   fifthFib;
+
+  @OptionalProperty( { path: 'nested.fibs[2]' } )
+  thirdFib;
 }

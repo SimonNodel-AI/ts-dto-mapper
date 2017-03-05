@@ -10,3 +10,7 @@ export function createDecoratedInstance( decorator, constructorToBeDecorated ): 
 export function getRequiredProperties( source ) {
   return getMappingInfo( source ).requiredProperties;
 }
+
+export function getOptionalProperties( source ) {
+  return getMappingInfo( source ).optionalProperties;
+}
