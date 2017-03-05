@@ -13,6 +13,7 @@ export class Mapper {
 
     saveSourceIfKeepOriginalDefined( source, meta );
     assignRequiredValuesFromSource( instance, source, meta );
+    assignOptionalValuesFromSource( instance, source, meta );
 
     return <T>instance;
   }
@@ -25,6 +26,7 @@ export class Mapper {
     const result = meta.options.keepOriginal ? meta.original : {};
 
     assignRequiredPropertiesToResult( mappedInstance, result, meta );
+    assignOptionalPropertiesToResult( mappedInstance, result, meta );
 
     return result;
   }
@@ -52,6 +54,17 @@ function assignRequiredValuesFromSource( instance: any, source: any, meta: Mappi
   });
 }
 
+function assignOptionalValuesFromSource( instance: any, source: any, meta: MappingInfo ) {
+  if ( isUndefined( meta.optionalProperties ) ) {
+    return;
+  }
+
+  each( meta.optionalProperties, ( property, name ) => {
+    const value = get( source, property.path, property.defaultValue );
+    meta.optionalPropertyValues[ name ] = value;
+  });
+}
+
 function assignRequiredPropertiesToResult( instance: any, result: any, meta: MappingInfo ) {
   if ( isUndefined( meta.requiredProperties ) ) {
     return;
@@ -75,4 +88,22 @@ function shouldBeExcluded( propertyExclusionValue, metaOptionsExclusionFlag ) {
     return true;
   }
   return ( isUndefined( propertyExclusionValue ) ) ? metaOptionsExclusionFlag : false;
+}
+
+function assignOptionalPropertiesToResult( instance: any, result: any, meta: MappingInfo ) {
+ if ( isUndefined( meta.optionalProperties ) ) {
+    return;
+  }
+
+  each( meta.optionalProperties, ( property, propertyName ) => {
+    const value = instance[ propertyName ];
+    if ( isUndefined( value ) && shouldBeExcluded( property.excludeIfUndefined, meta.options.excludeIfUndefined ) ) {
+      unset( result, property.path );
+      return true;
+    } else if ( isNull( value ) && shouldBeExcluded( property.excludeIfNull, meta.options.excludeIfNull ) ) {
+      unset( result, property.path );
+      return true;
+    }
+    set( result, property.path, value );
+  });
 }

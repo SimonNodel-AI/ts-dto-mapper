@@ -1,3 +1,4 @@
+import { OptionalPropertyOptions } from './optional-property-options.interface';
 import { RequiredPropertyOptions } from './required-property-options.interface';
 import { MappingOptions } from './mapping-options.interface';
 
@@ -56,4 +57,22 @@ export interface MappingInfo {
    * @memberOf MappingInfo
    */
   requiredPropertyValues?: { [name: string ]: any };
+
+
+  /**
+   * Hash of property names to OptionalProperty definitions
+   *
+   * @type {{[ name: string ]: OptionalPropertyOptions }}
+   * @memberOf MappingInfo
+   */
+  optionalProperties?: { [ name: string ]: OptionalPropertyOptions };
+
+
+  /**
+   * Value storage for optional properties.
+   *
+   * @type {{ [name: string ]: any }}
+   * @memberOf MappingInfo
+   */
+  optionalPropertyValues?: { [name: string ]: any };
 }
