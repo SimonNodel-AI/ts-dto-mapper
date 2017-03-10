@@ -14,3 +14,7 @@ export function getRequiredProperties( source ) {
 export function getOptionalProperties( source ) {
   return getMappingInfo( source ).optionalProperties;
 }
+
+export function getTransformsFrom( source ) {
+  return getMappingInfo( source ).transformsFrom;
+}

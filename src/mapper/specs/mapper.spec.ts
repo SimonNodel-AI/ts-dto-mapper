@@ -12,9 +12,11 @@ import {
   ClassWithDefaultDecoratorAndOptionalProperty,
   ClassWithDefaultDecoratorAndOptionalPropertyWithDefault,
   ClassWithDefaultDecoratorAndOptionalReadOnlyProperty,
+  ClassWithDefaultDecoratorAndReadOnlyProperties,
   ClassWithDefaultDecoratorAndRequiredNestedProperty,
   ClassWithDefaultDecoratorAndRequiredProperty,
-  ClassWithDefaultDecoratorAndReadOnlyProperties,
+  ClassWithDefaultDecoratorOptionalPropertyWithTransformFrom,
+  ClassWithDefaultDecoratorRequiredPropertyWithTransformFrom,
   ClassWithKeepOriginal,
   ClassWithKeepOriginalAndRequiredAndOptionalNestedProperties,
   ClassWithKeepOriginalAndRequiredAndOptionalProperties
@@ -28,7 +30,10 @@ const sourceWithNestedFibs = {
   },
   important: 'Life is important',
   alsoImportant: 'Water is important',
-  smart: 'move'
+  smart: 'move',
+  five: 5,
+  seven: 7,
+  numbers: [9, 33]
 };
 
 describe( 'Mapper', () => {
@@ -101,6 +106,14 @@ describe( 'Mapper', () => {
           );
       } );
 
+      it( 'should apply transformation function', () => {
+        const mappedInstance = Mapper.from(
+          ClassWithDefaultDecoratorRequiredPropertyWithTransformFrom, sourceWithNestedFibs );
+
+        expect( mappedInstance.ten ).toEqual(10);
+        expect( mappedInstance.odds ).toEqual([27, 99]);
+      } );
+
     } );
 
     describe( 'OptionalProperties', () => {
@@ -141,6 +154,13 @@ describe( 'Mapper', () => {
         expect( mappedInstance.aDefaultValue ).toBe( 33 );
       } );
 
+      it( 'should apply transformation function', () => {
+        const mappedInstance = Mapper.from(
+          ClassWithDefaultDecoratorOptionalPropertyWithTransformFrom, sourceWithNestedFibs );
+
+        expect( mappedInstance.twentyOne ).toEqual( 21 );
+        expect( mappedInstance.evens ).toEqual( [36, 132] );
+      } );
     } );
 
   } );

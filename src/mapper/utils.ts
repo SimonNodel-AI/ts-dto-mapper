@@ -11,6 +11,7 @@ export function ensureMappingMetaIsDefined(target: any) {
           requiredProperties: {},
           values: {},
           optionalProperties: {},
+          transformsFrom: {},
         },
         enumerable: false,
         configurable: false

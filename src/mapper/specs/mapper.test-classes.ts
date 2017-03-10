@@ -1,3 +1,4 @@
+import { TransformOnFrom } from '../transform-on-from.decorator';
 import { OptionalProperty } from '../optional-property.decorator';
 import { RequiredProperty } from '../required-property.decorator';
 import { Mapping } from '../mapping.decorator';
@@ -47,6 +48,28 @@ export class ClassWithDefaultDecoratorAndReadOnlyProperties {
 
   @OptionalProperty( { path: 'smart', readOnly: true } )
   doNotTouchThisValue;
+}
+
+@Mapping()
+export class ClassWithDefaultDecoratorRequiredPropertyWithTransformFrom {
+  @RequiredProperty( { path: 'five' } )
+  @TransformOnFrom( v => v * 2 )
+  ten;
+
+  @RequiredProperty( { path: 'numbers' } )
+  @TransformOnFrom( v => v.map( x => x * 3 ) )
+  odds;
+}
+
+@Mapping()
+export class ClassWithDefaultDecoratorOptionalPropertyWithTransformFrom {
+  @OptionalProperty( { path: 'seven' } )
+  @TransformOnFrom( v => v * 3 )
+  twentyOne;
+
+  @OptionalProperty( { path: 'numbers' } )
+  @TransformOnFrom( v => v.map( x => x * 4 ) )
+  evens;
 }
 
 @Mapping()
