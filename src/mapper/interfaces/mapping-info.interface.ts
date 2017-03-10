@@ -51,12 +51,12 @@ export interface MappingInfo {
 
 
   /**
-   * Value storage for required properties.
+   * Value storage for mapped properties.
    *
    * @type {{ [name: string ]: any }}
    * @memberOf MappingInfo
    */
-  requiredPropertyValues?: { [name: string ]: any };
+  values?: { [name: string ]: any };
 
 
   /**
@@ -66,13 +66,4 @@ export interface MappingInfo {
    * @memberOf MappingInfo
    */
   optionalProperties?: { [ name: string ]: OptionalPropertyOptions };
-
-
-  /**
-   * Value storage for optional properties.
-   *
-   * @type {{ [name: string ]: any }}
-   * @memberOf MappingInfo
-   */
-  optionalPropertyValues?: { [name: string ]: any };
 }

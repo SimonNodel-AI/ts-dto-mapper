@@ -9,9 +9,8 @@ export function ensureMappingMetaIsDefined(target: any) {
       Object.defineProperty( target, '_mappingMeta', {
         value: <MappingInfo>{
           requiredProperties: {},
-          requiredPropertyValues: {},
+          values: {},
           optionalProperties: {},
-          optionalPropertyValues: {}
         },
         enumerable: false,
         configurable: false
