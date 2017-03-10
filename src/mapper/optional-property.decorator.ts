@@ -31,17 +31,17 @@ export function OptionalProperty( options: OptionalPropertyOptions ) {
 
     ensureMappingMetaIsDefined( target );
     target._mappingMeta.optionalProperties[ key ] = resolveOptionsWithDefaults( options );
-    target._mappingMeta.optionalPropertyValues[ key ] = this[ key ];
+    target._mappingMeta.values[ key ] = this[ key ];
 
     const getter = function getter() {
-      return target._mappingMeta.optionalPropertyValues[ key ];
+      return target._mappingMeta.values[ key ];
     };
 
     const setter = function setter( newValue ) {
       if ( options.readOnly ) {
         throw new Error( `Cannot assign a value to read-only property "${key}"!` );
       }
-      target._mappingMeta.optionalPropertyValues[ key ] = newValue;
+      target._mappingMeta.values[ key ] = newValue;
     };
 
     if ( delete this[ key ] ) {

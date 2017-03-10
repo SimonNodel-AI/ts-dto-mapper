@@ -30,17 +30,17 @@ export function RequiredProperty( options: RequiredPropertyOptions ) {
 
     ensureMappingMetaIsDefined( target );
     target._mappingMeta.requiredProperties[ key ] = resolveOptionsWithDefaults( options );
-    target._mappingMeta.requiredPropertyValues[ key ] = this[ key ];
+    target._mappingMeta.values[ key ] = this[ key ];
 
     const getter = function getter() {
-      return target._mappingMeta.requiredPropertyValues[ key ];
+      return target._mappingMeta.values[ key ];
     };
 
     const setter = function setter( newValue ) {
       if ( options.readOnly ) {
         throw new Error( `Cannot assign a value to read-only property "${key}"!` );
       }
-      target._mappingMeta.requiredPropertyValues[ key ] = newValue;
+      target._mappingMeta.values[ key ] = newValue;
     };
 
     if ( delete this[ key ] ) {
