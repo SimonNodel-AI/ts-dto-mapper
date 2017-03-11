@@ -1,3 +1,4 @@
+import { TransformOnToSource } from '../transform-on-to-source.decorator';
 import { TransformOnFrom } from '../transform-on-from.decorator';
 import { OptionalProperty } from '../optional-property.decorator';
 import { RequiredProperty } from '../required-property.decorator';
@@ -62,6 +63,17 @@ export class ClassWithDefaultDecoratorRequiredPropertyWithTransformFrom {
 }
 
 @Mapping()
+export class ClassWithDefaultDecoratorRequiredPropertyWithTransformToSource {
+  @RequiredProperty( { path: 'five' } )
+  @TransformOnToSource( v => v / 5 )
+  ten;
+
+  @RequiredProperty( { path: 'numbers' } )
+  @TransformOnToSource( v => v.map( x => x / 3 ) )
+  odds;
+}
+
+@Mapping()
 export class ClassWithDefaultDecoratorOptionalPropertyWithTransformFrom {
   @OptionalProperty( { path: 'seven' } )
   @TransformOnFrom( v => v * 3 )
@@ -69,6 +81,17 @@ export class ClassWithDefaultDecoratorOptionalPropertyWithTransformFrom {
 
   @OptionalProperty( { path: 'numbers' } )
   @TransformOnFrom( v => v.map( x => x * 4 ) )
+  evens;
+}
+
+@Mapping()
+export class ClassWithDefaultDecoratorOptionalPropertyWithTransformToSource {
+  @OptionalProperty( { path: 'seven' } )
+  @TransformOnToSource( v => v * 4 )
+  twentyOne;
+
+  @OptionalProperty( { path: 'numbers' } )
+  @TransformOnToSource( v => v.map( x => x * 6 ) )
   evens;
 }
 

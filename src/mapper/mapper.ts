@@ -55,7 +55,7 @@ function assignRequiredValuesFromSource( instance: any, source: any, meta: Mappi
 }
 
 function applyTransformFrom( name: string, meta: MappingInfo, value: any ): any {
-  const transform = meta.transformsFrom[ name ] || (v => v);
+  const transform = meta.transformsFrom[ name ] || ( v => v );
   return transform( value );
 }
 
@@ -85,7 +85,7 @@ function assignRequiredPropertiesToResult( instance: any, result: any, meta: Map
       unset( result, property.path );
       return true;
     }
-    set( result, property.path, value );
+    set( result, property.path, applyTransformToSource( propertyName, meta, value ) );
   } );
 }
 
@@ -94,6 +94,11 @@ function shouldBeExcluded( propertyExclusionValue, metaOptionsExclusionFlag ) {
     return true;
   }
   return ( isUndefined( propertyExclusionValue ) ) ? metaOptionsExclusionFlag : false;
+}
+
+function applyTransformToSource( name: string, meta: MappingInfo, value: any ): any {
+  const transform = meta.transformsToSource[ name ] || ( v => v );
+  return transform( value );
 }
 
 function assignOptionalPropertiesToResult( instance: any, result: any, meta: MappingInfo ) {
@@ -110,6 +115,6 @@ function assignOptionalPropertiesToResult( instance: any, result: any, meta: Map
       unset( result, property.path );
       return true;
     }
-    set( result, property.path, value );
+    set( result, property.path, applyTransformToSource( propertyName, meta, value ) );
   } );
 }
