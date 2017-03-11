@@ -67,7 +67,7 @@ function assignOptionalValuesFromSource( instance: any, source: any, meta: Mappi
 
   each( meta.optionalProperties, ( property, name ) => {
     const value = get( source, property.path, property.defaultValue );
-    meta.values[ name ] = value;
+    meta.values[ name ] = applyTransformFrom( name, meta, value );
   });
 }
 
