@@ -66,4 +66,12 @@ export interface MappingInfo {
    * @memberOf MappingInfo
    */
   optionalProperties?: { [ name: string ]: OptionalPropertyOptions };
+
+  /**
+   * Functor storage for transforming source property value during mapping
+   *
+   * @type {{ [name: string ]: TransformOnFrom }}
+   * @memberOf MappingInfo
+   */
+  transformsFrom?: { [name: string ]: (v: any) => any };
 }

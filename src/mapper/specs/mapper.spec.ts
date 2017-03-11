@@ -12,9 +12,13 @@ import {
   ClassWithDefaultDecoratorAndOptionalProperty,
   ClassWithDefaultDecoratorAndOptionalPropertyWithDefault,
   ClassWithDefaultDecoratorAndOptionalReadOnlyProperty,
+  ClassWithDefaultDecoratorAndReadOnlyProperties,
   ClassWithDefaultDecoratorAndRequiredNestedProperty,
   ClassWithDefaultDecoratorAndRequiredProperty,
-  ClassWithDefaultDecoratorAndReadOnlyProperties,
+  ClassWithDefaultDecoratorOptionalPropertyWithTransformFrom,
+  ClassWithDefaultDecoratorOptionalPropertyWithTransformToSource,
+  ClassWithDefaultDecoratorRequiredPropertyWithTransformFrom,
+  ClassWithDefaultDecoratorRequiredPropertyWithTransformToSource,
   ClassWithKeepOriginal,
   ClassWithKeepOriginalAndRequiredAndOptionalNestedProperties,
   ClassWithKeepOriginalAndRequiredAndOptionalProperties
@@ -28,7 +32,10 @@ const sourceWithNestedFibs = {
   },
   important: 'Life is important',
   alsoImportant: 'Water is important',
-  smart: 'move'
+  smart: 'move',
+  five: 5,
+  seven: 7,
+  numbers: [ 9, 33 ]
 };
 
 describe( 'Mapper', () => {
@@ -101,6 +108,14 @@ describe( 'Mapper', () => {
           );
       } );
 
+      it( 'should apply transformation function on from mapping', () => {
+        const mappedInstance = Mapper.from(
+          ClassWithDefaultDecoratorRequiredPropertyWithTransformFrom, sourceWithNestedFibs );
+
+        expect( mappedInstance.ten ).toEqual( 10 );
+        expect( mappedInstance.odds ).toEqual( [ 27, 99 ] );
+      } );
+
     } );
 
     describe( 'OptionalProperties', () => {
@@ -141,6 +156,13 @@ describe( 'Mapper', () => {
         expect( mappedInstance.aDefaultValue ).toBe( 33 );
       } );
 
+      it( 'should apply transformation function on from mapping', () => {
+        const mappedInstance = Mapper.from(
+          ClassWithDefaultDecoratorOptionalPropertyWithTransformFrom, sourceWithNestedFibs );
+
+        expect( mappedInstance.twentyOne ).toEqual( 21 );
+        expect( mappedInstance.evens ).toEqual( [ 36, 132 ] );
+      } );
     } );
 
   } );
@@ -279,6 +301,24 @@ describe( 'Mapper', () => {
 
       expect( result.important ).toEqual( 'Life is important' );
       expect( result.smart ).toEqual( 'move' );
+    } );
+
+    it( 'should apply transformation function on to source mapping', () => {
+      mappedInstance = Mapper.from(
+        ClassWithDefaultDecoratorRequiredPropertyWithTransformToSource, sourceWithNestedFibs );
+      const result = Mapper.toSource( mappedInstance );
+
+      expect( result[ 'five' ] ).toEqual( 1 );
+      expect( result[ 'numbers' ] ).toEqual( [ 3, 11 ] );
+    } );
+
+    it( 'should apply transformation function on to source mapping', () => {
+      mappedInstance = Mapper.from(
+        ClassWithDefaultDecoratorOptionalPropertyWithTransformToSource, sourceWithNestedFibs );
+      const result = Mapper.toSource( mappedInstance );
+
+      expect( result[ 'seven' ] ).toEqual( 28 );
+      expect( result[ 'numbers' ] ).toEqual( [ 54, 198 ] );
     } );
 
   } );

@@ -50,9 +50,15 @@ function assignRequiredValuesFromSource( instance: any, source: any, meta: Mappi
     if ( isUndefined( value ) ) {
       throw new Error( `Required property value "${property.path}"=>${name} was not found for ${meta.name}` );
     }
-    meta.values[ name ] = value;
+    meta.values[ name ] = applyTransformFrom( name, meta, value );
   });
 }
+
+function applyTransformFrom( name: string, meta: MappingInfo, value: any ): any {
+  const transform = meta.transformsFrom[ name ] || ( v => v );
+  return transform( value );
+}
+
 
 function assignOptionalValuesFromSource( instance: any, source: any, meta: MappingInfo ) {
   if ( isUndefined( meta.optionalProperties ) ) {
@@ -61,7 +67,7 @@ function assignOptionalValuesFromSource( instance: any, source: any, meta: Mappi
 
   each( meta.optionalProperties, ( property, name ) => {
     const value = get( source, property.path, property.defaultValue );
-    meta.values[ name ] = value;
+    meta.values[ name ] = applyTransformFrom( name, meta, value );
   });
 }
 
@@ -79,8 +85,8 @@ function assignRequiredPropertiesToResult( instance: any, result: any, meta: Map
       unset( result, property.path );
       return true;
     }
-    set( result, property.path, value );
-  });
+    set( result, property.path, applyTransformToSource( propertyName, meta, value ) );
+  } );
 }
 
 function shouldBeExcluded( propertyExclusionValue, metaOptionsExclusionFlag ) {
@@ -90,8 +96,13 @@ function shouldBeExcluded( propertyExclusionValue, metaOptionsExclusionFlag ) {
   return ( isUndefined( propertyExclusionValue ) ) ? metaOptionsExclusionFlag : false;
 }
 
+function applyTransformToSource( name: string, meta: MappingInfo, value: any ): any {
+  const transform = meta.transformsToSource[ name ] || ( v => v );
+  return transform( value );
+}
+
 function assignOptionalPropertiesToResult( instance: any, result: any, meta: MappingInfo ) {
- if ( isUndefined( meta.optionalProperties ) ) {
+  if ( isUndefined( meta.optionalProperties ) ) {
     return;
   }
 
@@ -104,6 +115,6 @@ function assignOptionalPropertiesToResult( instance: any, result: any, meta: Map
       unset( result, property.path );
       return true;
     }
-    set( result, property.path, value );
-  });
+    set( result, property.path, applyTransformToSource( propertyName, meta, value ) );
+  } );
 }
