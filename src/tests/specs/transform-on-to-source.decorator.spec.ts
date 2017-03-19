@@ -1,12 +1,12 @@
 import { TransformOnToSource } from '../../mapper/transform-on-to-source.decorator';
 import { getTransformsToSource } from '../helpers';
-import { Mapping } from '../../mapper/mapping.decorator';
+import { DtoMappable } from '../../mapper/dto-mappable.decorator';
 import { OptionalProperty } from '../../mapper/optional-property.decorator';
 import { RequiredProperty } from '../../mapper/required-property.decorator';
 
 const addThree = v => v + 3;
 
-@Mapping()
+@DtoMappable()
 class TransformOnToSourceTest {
   @RequiredProperty( { path: 'pi' })
   @TransformOnToSource( addThree )

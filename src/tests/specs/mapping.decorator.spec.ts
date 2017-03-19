@@ -1,8 +1,8 @@
 import { getMappingInfo } from '../../mapper/utils';
 import { createDecoratedInstance } from '../helpers';
 import {
-  Mapping
-} from '../../mapper/mapping.decorator';
+  DtoMappable
+} from '../../mapper/dto-mappable.decorator';
 import {
   MappingOptions
 } from '../../mapper/interfaces/mapping-options.interface';
@@ -14,7 +14,7 @@ import {
 describe( 'Mapping', () => {
 
   it( 'should return a decorator function', () => {
-    const decorator = Mapping( {
+    const decorator = DtoMappable( {
       keepOriginal: true
     });
 
@@ -25,7 +25,7 @@ describe( 'Mapping', () => {
     const testFunction = function () { };
 
     it( 'should add mapping info with default options when no options are provided', () => {
-      const decorator = Mapping();
+      const decorator = DtoMappable();
 
       const mappedInstance = createDecoratedInstance( decorator, testFunction );
       const mappingInfo = getMappingInfo( mappedInstance );
@@ -39,7 +39,7 @@ describe( 'Mapping', () => {
     });
 
     it( 'should add mapping info with keepOriginal parameter', () => {
-      const decorator = Mapping( {
+      const decorator = DtoMappable( {
         keepOriginal: true
       });
 
@@ -51,7 +51,7 @@ describe( 'Mapping', () => {
     });
 
     it( 'should add mapping info with excludeIfNull parameter', () => {
-      const decorator = Mapping( {
+      const decorator = DtoMappable( {
         excludeIfNull: true
       });
 
@@ -63,7 +63,7 @@ describe( 'Mapping', () => {
     });
 
     it( 'should add mapping info with excludeIfUndefined parameter', () => {
-      const decorator = Mapping( {
+      const decorator = DtoMappable( {
         excludeIfUndefined: true
       });
 

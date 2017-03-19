@@ -5,7 +5,7 @@ import { getMappingInfo } from './utils';
 import { each, get, set, unset, isUndefined, isNull } from 'lodash';
 
 
-export class Mapper {
+export class DtoMapper {
 
   static from<T>( mappingDefinition: { new ( ...params ): T; }, source: any = {}, ...params ): T {
     const instance = new mappingDefinition( ...params );

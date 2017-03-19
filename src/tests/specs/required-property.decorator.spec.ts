@@ -34,7 +34,7 @@ describe( 'RequiredProperty', () => {
     expect(() => {
       const decorator = RequiredProperty( { path: '' });
       decorator( WillThrow, 'shouldThrow' );
-    }).toThrow( Error( 'RequiredProperty mapping decorator requires path to be defined' ) );
+    }).toThrow( 'RequiredProperty mapping decorator requires path to be defined' );
   });
 
   describe( 'decorator', () => {

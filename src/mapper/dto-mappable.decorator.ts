@@ -11,10 +11,10 @@ const DEFAULT_OPTIONS: MappingOptions = {
 };
 
 /**
- * Mapping definition decorator.
+ * DTO Mappable definition decorator.
  *
  * Usage:
- * @Mapping({keepOriginal: true})
+ * @DtoMappable({keepOriginal: true})
  * class Foo {
  * ...
  * }
@@ -23,7 +23,7 @@ const DEFAULT_OPTIONS: MappingOptions = {
  * @param {MappingOptions} [mappingOptions] - options for how to handle whole object being mapped
  * @returns {MappingMeta}
  */
-export function Mapping( mappingOptions: MappingOptions = {}) {
+export function DtoMappable( mappingOptions: MappingOptions = {}) {
 
   return ( target: Function ) => {
     const original: Function = target;

@@ -2,9 +2,9 @@ import { TransformOnToSource } from '../mapper/transform-on-to-source.decorator'
 import { TransformOnFrom } from '../mapper/transform-on-from.decorator';
 import { OptionalProperty } from '../mapper/optional-property.decorator';
 import { RequiredProperty } from '../mapper/required-property.decorator';
-import { Mapping } from '../mapper/mapping.decorator';
+import { DtoMappable } from '../mapper/dto-mappable.decorator';
 
-@Mapping()
+@DtoMappable()
 export class ClassWithDefaultDecorator {
   private foo: string;
 
@@ -18,31 +18,31 @@ export class ClassWithDefaultDecorator {
 }
 
 
-@Mapping()
+@DtoMappable()
 export class ClassWithDefaultDecoratorAndRequiredProperty {
   @RequiredProperty( { path: 'uno' } )
   requiredUno;
 }
 
-@Mapping()
+@DtoMappable()
 export class ClassWithDefaultDecoratorAndOptionalProperty {
   @OptionalProperty( { path: 'dos' } )
   optionalDos;
 }
 
-@Mapping()
+@DtoMappable()
 export class ClassWithDefaultDecoratorAndRequiredNestedProperty {
   @RequiredProperty( { path: 'nested.fibs[4]' } )
   fifthFib;
 }
 
-@Mapping()
+@DtoMappable()
 export class ClassWithDefaultDecoratorAndOptionalNestedProperty {
   @OptionalProperty( { path: 'nested.fibs[3]' } )
   forthFib;
 }
 
-@Mapping()
+@DtoMappable()
 export class ClassWithDefaultDecoratorAndReadOnlyProperties {
   @RequiredProperty( { path: 'important', readOnly: true } )
   doNotTouchThis;
@@ -51,7 +51,7 @@ export class ClassWithDefaultDecoratorAndReadOnlyProperties {
   doNotTouchThisValue;
 }
 
-@Mapping()
+@DtoMappable()
 export class ClassWithDefaultDecoratorRequiredPropertyWithTransformFrom {
   @RequiredProperty( { path: 'five' } )
   @TransformOnFrom( v => v * 2 )
@@ -62,7 +62,7 @@ export class ClassWithDefaultDecoratorRequiredPropertyWithTransformFrom {
   odds;
 }
 
-@Mapping()
+@DtoMappable()
 export class ClassWithDefaultDecoratorRequiredPropertyWithTransformToSource {
   @RequiredProperty( { path: 'five' } )
   @TransformOnToSource( v => v / 5 )
@@ -73,7 +73,7 @@ export class ClassWithDefaultDecoratorRequiredPropertyWithTransformToSource {
   odds;
 }
 
-@Mapping()
+@DtoMappable()
 export class ClassWithDefaultDecoratorOptionalPropertyWithTransformFrom {
   @OptionalProperty( { path: 'seven' } )
   @TransformOnFrom( v => v * 3 )
@@ -84,7 +84,7 @@ export class ClassWithDefaultDecoratorOptionalPropertyWithTransformFrom {
   evens;
 }
 
-@Mapping()
+@DtoMappable()
 export class ClassWithDefaultDecoratorOptionalPropertyWithTransformToSource {
   @OptionalProperty( { path: 'seven' } )
   @TransformOnToSource( v => v * 4 )
@@ -95,19 +95,19 @@ export class ClassWithDefaultDecoratorOptionalPropertyWithTransformToSource {
   evens;
 }
 
-@Mapping()
+@DtoMappable()
 export class ClassWithDefaultDecoratorAndOptionalReadOnlyProperty {
   @OptionalProperty( { path: 'alsoImportant', readOnly: true } )
   doNotTouchThisTwo;
 }
 
-@Mapping()
+@DtoMappable()
 export class ClassWithDefaultDecoratorAndOptionalPropertyWithDefault {
   @OptionalProperty( { path: 'cooper', defaultValue: 33 } )
   aDefaultValue;
 }
 
-@Mapping( { keepOriginal: true } )
+@DtoMappable( { keepOriginal: true } )
 export class ClassWithKeepOriginal {
 
   private foo: string;
@@ -122,7 +122,7 @@ export class ClassWithKeepOriginal {
 }
 
 
-@Mapping( { keepOriginal: true } )
+@DtoMappable( { keepOriginal: true } )
 export class ClassWithKeepOriginalAndRequiredAndOptionalProperties {
   @RequiredProperty( { path: 'uno' } )
   requiredUno;
@@ -131,7 +131,7 @@ export class ClassWithKeepOriginalAndRequiredAndOptionalProperties {
   optionalDos;
 }
 
-@Mapping( { keepOriginal: true } )
+@DtoMappable( { keepOriginal: true } )
 export class ClassWithKeepOriginalAndRequiredAndOptionalNestedProperties {
   @RequiredProperty( { path: 'nested.fibs[4]' } )
   fifthFib;
