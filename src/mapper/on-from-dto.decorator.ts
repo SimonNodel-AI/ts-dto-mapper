@@ -1,6 +1,6 @@
 import { ensureMappingMetaIsDefined } from './utils';
 
-export function TransformOnFrom( action: (v: any) => any ) {
+export function OnFromDto( action: (v: any) => any ) {
   return ( target: any, key: string ) => {
 
     ensureMappingMetaIsDefined( target );

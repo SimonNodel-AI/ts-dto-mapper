@@ -1,5 +1,5 @@
 import { getTransformsFrom } from '../helpers';
-import { TransformOnFrom } from '../../mapper/transform-on-from.decorator';
+import { OnFromDto } from '../../mapper/on-from-dto.decorator';
 import { DtoMappable } from '../../mapper/dto-mappable.decorator';
 import { OptionalProperty } from '../../mapper/optional-property.decorator';
 import { RequiredProperty } from '../../mapper/required-property.decorator';
@@ -9,14 +9,14 @@ const doubler = v => v * 2;
 @DtoMappable()
 class TransformOnFromTest {
   @RequiredProperty( { path: 'pi' })
-  @TransformOnFrom( doubler )
+  @OnFromDto( doubler )
   twoPi;
 }
 
 describe( 'TransformOnFrom', () => {
 
   it( 'should return a decorator function', () => {
-    const decorator = TransformOnFrom( () => {} );
+    const decorator = OnFromDto( () => {} );
 
     expect( decorator ).toBeDefined();
   });
