@@ -13,7 +13,7 @@ export function ensureMappingMetaIsDefined(target: any) {
           requiredProperties: {},
           values: {},
           optionalProperties: {},
-          transformsFrom: {},
+          onFromDtoTransforms: {},
           transformsToSource: {}
         },
         enumerable: false,

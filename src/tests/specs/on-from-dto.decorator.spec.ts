@@ -1,4 +1,4 @@
-import { getTransformsFrom } from '../helpers';
+import { getFromDtoTransforms } from '../helpers';
 import { OnFromDto } from '../../mapper/on-from-dto.decorator';
 import { DtoMappable } from '../../mapper/dto-mappable.decorator';
 import { OptionalProperty } from '../../mapper/optional-property.decorator';
@@ -25,7 +25,7 @@ describe( 'TransformOnFrom', () => {
 
     it( 'should add transformation functor', () => {
       const instance = new TransformOnFromTest();
-      const transforms = getTransformsFrom( instance );
+      const transforms = getFromDtoTransforms( instance );
 
       expect( transforms ).toBeDefined();
       expect( transforms[ 'twoPi' ] ).toBeDefined();

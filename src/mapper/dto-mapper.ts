@@ -55,7 +55,7 @@ function assignRequiredValuesFromSource( instance: any, source: any, meta: Mappi
 }
 
 function applyTransformFrom( name: string, meta: MappingInfo, value: any ): any {
-  const transform = meta.transformsFrom[ name ] || ( v => v );
+  const transform = meta.onFromDtoTransforms[ name ] || ( v => v );
   return transform( value );
 }
 

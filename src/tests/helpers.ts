@@ -15,8 +15,8 @@ export function getOptionalProperties( source ) {
   return getMappingInfo( source ).optionalProperties;
 }
 
-export function getTransformsFrom( source ) {
-  return getMappingInfo( source ).transformsFrom;
+export function getFromDtoTransforms( source ) {
+  return getMappingInfo( source ).onFromDtoTransforms;
 }
 
 export function getTransformsToSource( source ) {

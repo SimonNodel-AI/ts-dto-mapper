@@ -5,6 +5,6 @@ export function OnFromDto( action: (v: any) => any ) {
 
     ensureMappingMetaIsDefined( target );
 
-    target._mappingMeta.transformsFrom[ key ] = action;
+    target._mappingMeta.onFromDtoTransforms[ key ] = action;
   };
 }
