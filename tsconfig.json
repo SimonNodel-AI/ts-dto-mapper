@@ -15,7 +15,8 @@
 		],
 		"types": [
 			"@types/node",
-      "@types/lodash"
+      "@types/lodash",
+      "@types/jest"
 		]
 	},
 	"exclude": [
