@@ -49,7 +49,7 @@ describe( 'Mapper', () => {
     it( 'should create an instance without parameters', () => {
       const mapping = DtoMappable();
 
-      const mappedInstance = DtoMapper.from( ClassWithDefaultDecorator, {} );
+      const mappedInstance = DtoMapper.fromDto( ClassWithDefaultDecorator, {} );
       const mappingInfo = getMappingInfo( mappedInstance );
 
       expect( mappedInstance ).toBeDefined();
@@ -64,7 +64,7 @@ describe( 'Mapper', () => {
         sourceFoo: 'source_foo'
       };
 
-      const mappedInstance = DtoMapper.from( ClassWithKeepOriginal, source );
+      const mappedInstance = DtoMapper.fromDto( ClassWithKeepOriginal, source );
       const mappingInfo = getMappingInfo( mappedInstance );
 
       expect( mappedInstance ).toBeDefined();
@@ -75,40 +75,39 @@ describe( 'Mapper', () => {
     describe( 'RequiredProperties', () => {
 
       it( 'should assign correct value from source', () => {
-        const mappedInstance = DtoMapper.from( ClassWithDefaultDecoratorAndRequiredProperty, sourceWithNestedFibs );
+        const mappedInstance = DtoMapper.fromDto( ClassWithDefaultDecoratorAndRequiredProperty, sourceWithNestedFibs );
 
         expect( mappedInstance.requiredUno ).toEqual( sourceWithNestedFibs.uno );
       } );
 
       it( 'should assign correct value from source for nested property', () => {
-        const mappedInstance = DtoMapper.from( ClassWithDefaultDecoratorAndRequiredNestedProperty, sourceWithNestedFibs );
+        const mappedInstance
+          = DtoMapper.fromDto( ClassWithDefaultDecoratorAndRequiredNestedProperty, sourceWithNestedFibs );
 
         expect( mappedInstance.fifthFib ).toEqual( sourceWithNestedFibs.nested.fibs[ 4 ] );
       } );
 
       it( 'should throw an error if required property is not defined', () => {
         expect(() => {
-          DtoMapper.from( ClassWithDefaultDecoratorAndRequiredNestedProperty, {} );
+          DtoMapper.fromDto( ClassWithDefaultDecoratorAndRequiredNestedProperty, {} );
         } ).toThrow(
           // tslint:disable-next-line:max-line-length
-          Error( 'Required property value "nested.fibs[4]"=>fifthFib was not found for ClassWithDefaultDecoratorAndRequiredNestedProperty' )
+          'Required property value "nested.fibs[4]"=>fifthFib was not found for ClassWithDefaultDecoratorAndRequiredNestedProperty'
           );
       } );
 
       it( 'should throw an error if client attempt to change read-only property', () => {
-        const mappedInstance = DtoMapper.from(
+        const mappedInstance = DtoMapper.fromDto(
           ClassWithDefaultDecoratorAndReadOnlyProperties, sourceWithNestedFibs );
 
         expect( mappedInstance.doNotTouchThis ).toEqual( 'Life is important' );
         expect(() => {
           mappedInstance.doNotTouchThis = 'fuBar';
-        } ).toThrow(
-          Error( 'Cannot assign a value to read-only property "doNotTouchThis"!' )
-          );
+        } ).toThrow( 'Cannot assign a value to read-only property "doNotTouchThis"!' );
       } );
 
       it( 'should apply transformation function on from mapping', () => {
-        const mappedInstance = DtoMapper.from(
+        const mappedInstance = DtoMapper.fromDto(
           ClassWithDefaultDecoratorRequiredPropertyWithTransformFrom, sourceWithNestedFibs );
 
         expect( mappedInstance.ten ).toEqual( 10 );
@@ -120,44 +119,42 @@ describe( 'Mapper', () => {
     describe( 'OptionalProperties', () => {
 
       it( 'should assign correct value from source', () => {
-        const mappedInstance = DtoMapper.from( ClassWithDefaultDecoratorAndOptionalProperty, sourceWithNestedFibs );
+        const mappedInstance = DtoMapper.fromDto( ClassWithDefaultDecoratorAndOptionalProperty, sourceWithNestedFibs );
 
         expect( mappedInstance.optionalDos ).toEqual( sourceWithNestedFibs.dos );
       } );
 
       it( 'should assign correct value from source for nested property', () => {
-        const mappedInstance = DtoMapper.from(
+        const mappedInstance = DtoMapper.fromDto(
           ClassWithDefaultDecoratorAndOptionalNestedProperty, sourceWithNestedFibs );
 
         expect( mappedInstance.forthFib ).toEqual( sourceWithNestedFibs.nested.fibs[ 3 ] );
       } );
 
       it( 'should not throw an error if optional property is not defined', () => {
-        const mappedInstance = DtoMapper.from( ClassWithDefaultDecoratorAndOptionalNestedProperty, {} );
+        const mappedInstance = DtoMapper.fromDto( ClassWithDefaultDecoratorAndOptionalNestedProperty, {} );
 
         expect( mappedInstance.forthFib ).toBeUndefined();
       } );
 
       it( 'should throw an error if client attempt to change read-only property', () => {
-        const mappedInstance = DtoMapper.from(
+        const mappedInstance = DtoMapper.fromDto(
           ClassWithDefaultDecoratorAndOptionalReadOnlyProperty, sourceWithNestedFibs );
 
         expect( mappedInstance.doNotTouchThisTwo ).toEqual( 'Water is important' );
         expect(() => {
           mappedInstance.doNotTouchThisTwo = 'fuBar';
-        } ).toThrow(
-          Error( 'Cannot assign a value to read-only property "doNotTouchThisTwo"!' )
-          );
+        } ).toThrow( 'Cannot assign a value to read-only property "doNotTouchThisTwo"!' );
       } );
 
       it( 'should use defaultValue is one is given for property that is not defined in source', () => {
-        const mappedInstance = DtoMapper.from( ClassWithDefaultDecoratorAndOptionalPropertyWithDefault, {} );
+        const mappedInstance = DtoMapper.fromDto( ClassWithDefaultDecoratorAndOptionalPropertyWithDefault, {} );
 
         expect( mappedInstance.aDefaultValue ).toBe( 33 );
       } );
 
       it( 'should apply transformation function on from mapping', () => {
-        const mappedInstance = DtoMapper.from(
+        const mappedInstance = DtoMapper.fromDto(
           ClassWithDefaultDecoratorOptionalPropertyWithTransformFrom, sourceWithNestedFibs );
 
         expect( mappedInstance.twentyOne ).toEqual( 21 );
@@ -182,7 +179,7 @@ describe( 'Mapper', () => {
         uno: 'one'
       };
 
-      mappedInstance = DtoMapper.from( ClassWithKeepOriginalAndRequiredAndOptionalProperties, source );
+      mappedInstance = DtoMapper.fromDto( ClassWithKeepOriginalAndRequiredAndOptionalProperties, source );
       mappingMeta = getMappingInfo( mappedInstance );
 
       next();
@@ -190,12 +187,12 @@ describe( 'Mapper', () => {
 
     it( 'should throw if given object without mapping meta', () => {
       expect(() => {
-        DtoMapper.toSource( {} );
-      } ).toThrow( Error( 'Mapping metadata is missing for given object' ) );
+        DtoMapper.toDto( {} );
+      } ).toThrow( 'Mapping metadata is missing for given object' );
     } );
 
     it( 'should have all unmapped source properties if keepOriginal is true', () => {
-      const result = DtoMapper.toSource( mappedInstance );
+      const result = DtoMapper.toDto( mappedInstance );
 
       expect( result.abc ).toBe( source.abc );
       expect( result.list ).toBe( source.list );
@@ -209,7 +206,7 @@ describe( 'Mapper', () => {
       mappingMeta.requiredProperties[ 'requiredUno' ].excludeIfNull = false;
       mappingMeta.optionalProperties[ 'optionalDos' ].excludeIfNull = false;
 
-      const result = DtoMapper.toSource( mappedInstance );
+      const result = DtoMapper.toDto( mappedInstance );
 
       expect( result.uno ).toBeNull();
       expect( result.dos ).toBeNull();
@@ -221,7 +218,7 @@ describe( 'Mapper', () => {
       mappingMeta.requiredProperties[ 'requiredUno' ].excludeIfNull = true;
       mappingMeta.optionalProperties[ 'optionalDos' ].excludeIfNull = true;
 
-      const result = DtoMapper.toSource( mappedInstance );
+      const result = DtoMapper.toDto( mappedInstance );
 
       expect( result.uno ).toBeUndefined();
       expect( result.dos ).toBeUndefined();
@@ -233,7 +230,7 @@ describe( 'Mapper', () => {
       mappingMeta.requiredProperties[ 'requiredUno' ].excludeIfUndefined = false;
       mappingMeta.optionalProperties[ 'optionalDos' ].excludeIfUndefined = false;
 
-      const result = DtoMapper.toSource( mappedInstance );
+      const result = DtoMapper.toDto( mappedInstance );
 
       expect( result.uno ).toBeUndefined();
       expect( result.hasOwnProperty( 'uno' ) ).toBe( true );
@@ -247,7 +244,7 @@ describe( 'Mapper', () => {
       mappingMeta.requiredProperties[ 'requiredUno' ].excludeIfUndefined = true;
       mappingMeta.optionalProperties[ 'optionalDos' ].excludeIfUndefined = true;
 
-      const result = DtoMapper.toSource( mappedInstance );
+      const result = DtoMapper.toDto( mappedInstance );
 
       expect( result.hasOwnProperty( 'uno' ) ).toBe( false );
       expect( result.hasOwnProperty( 'dos' ) ).toBe( false );
@@ -261,7 +258,7 @@ describe( 'Mapper', () => {
       mappingMeta.optionalProperties[ 'optionalDos' ].excludeIfUndefined = undefined;
       mappingMeta.options.excludeIfUndefined = true;
 
-      const result = DtoMapper.toSource( mappedInstance );
+      const result = DtoMapper.toDto( mappedInstance );
 
       expect( result.hasOwnProperty( 'uno' ) ).toBe( false );
       expect( result.hasOwnProperty( 'dos' ) ).toBe( false );
@@ -275,7 +272,7 @@ describe( 'Mapper', () => {
       mappingMeta.optionalProperties[ 'optionalDos' ].excludeIfUndefined = undefined;
       mappingMeta.options.excludeIfUndefined = false;
 
-      const result = DtoMapper.toSource( mappedInstance );
+      const result = DtoMapper.toDto( mappedInstance );
 
       expect( result.hasOwnProperty( 'uno' ) ).toBe( true );
       expect( result.uno ).toBeUndefined();
@@ -284,39 +281,39 @@ describe( 'Mapper', () => {
     } );
 
     it( 'should update nested source properties', () => {
-      mappedInstance = DtoMapper.from(
+      mappedInstance = DtoMapper.fromDto(
         ClassWithKeepOriginalAndRequiredAndOptionalNestedProperties, sourceWithNestedFibs );
 
       mappedInstance.fifthFib = 42;
       mappedInstance.thirdFib = 44;
-      const result = DtoMapper.toSource( mappedInstance );
+      const result = DtoMapper.toDto( mappedInstance );
 
       expect( result.nested.fibs[ 2 ] ).toEqual( 44 );
       expect( result.nested.fibs[ 4 ] ).toEqual( 42 );
     } );
 
     it( 'should include read-only value', () => {
-      mappedInstance = DtoMapper.from( ClassWithDefaultDecoratorAndReadOnlyProperties, sourceWithNestedFibs );
+      mappedInstance = DtoMapper.fromDto( ClassWithDefaultDecoratorAndReadOnlyProperties, sourceWithNestedFibs );
 
-      const result = DtoMapper.toSource( mappedInstance );
+      const result = DtoMapper.toDto( mappedInstance );
 
       expect( result.important ).toEqual( 'Life is important' );
       expect( result.smart ).toEqual( 'move' );
     } );
 
     it( 'should apply transformation function on to source mapping', () => {
-      mappedInstance = DtoMapper.from(
+      mappedInstance = DtoMapper.fromDto(
         ClassWithDefaultDecoratorRequiredPropertyWithTransformToSource, sourceWithNestedFibs );
-      const result = DtoMapper.toSource( mappedInstance );
+      const result = DtoMapper.toDto( mappedInstance );
 
       expect( result[ 'five' ] ).toEqual( 1 );
       expect( result[ 'numbers' ] ).toEqual( [ 3, 11 ] );
     } );
 
     it( 'should apply transformation function on to source mapping', () => {
-      mappedInstance = DtoMapper.from(
+      mappedInstance = DtoMapper.fromDto(
         ClassWithDefaultDecoratorOptionalPropertyWithTransformToSource, sourceWithNestedFibs );
-      const result = DtoMapper.toSource( mappedInstance );
+      const result = DtoMapper.toDto( mappedInstance );
 
       expect( result[ 'seven' ] ).toEqual( 28 );
       expect( result[ 'numbers' ] ).toEqual( [ 54, 198 ] );

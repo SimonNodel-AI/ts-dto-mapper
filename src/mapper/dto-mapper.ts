@@ -7,7 +7,7 @@ import { each, get, set, unset, isUndefined, isNull } from 'lodash';
 
 export class DtoMapper {
 
-  static from<T>( mappingDefinition: { new ( ...params ): T; }, source: any = {}, ...params ): T {
+  static fromDto<T>( mappingDefinition: { new ( ...params ): T; }, source: any = {}, ...params ): T {
     const instance = new mappingDefinition( ...params );
     const meta = getMappingInfo( instance );
 
@@ -18,7 +18,7 @@ export class DtoMapper {
     return <T>instance;
   }
 
-  static toSource( mappedInstance: any ) {
+  static toDto( mappedInstance: any ) {
     const meta = getMappingInfo( mappedInstance );
     if ( isUndefined( meta ) ) {
       throw new Error( 'Mapping metadata is missing for given object' );

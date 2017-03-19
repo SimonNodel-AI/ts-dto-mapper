@@ -4,7 +4,7 @@ import { MappingMeta } from '../mapper/interfaces/mapping-meta.interface';
 
 export function createDecoratedInstance( decorator, constructorToBeDecorated ): MappingMeta {
   const decoratedConstructor = decorator( constructorToBeDecorated );
-  return new decoratedConstructor();    
+  return new decoratedConstructor();
 };
 
 export function getRequiredProperties( source ) {
