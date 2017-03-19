@@ -23,8 +23,8 @@
   "license": "MIT",
   "scripts": {
     "prebuild": "npm run lint",
-    "build": "rm -rf dist && tsc -p .",
-    "lint": "tslint \"src/mapper/**/*.ts\" --project tsconfig.json --type-check",
+    "build": "rm -rf dist && tsc -p build_tsconfig.json",
+    "lint": "tslint \"src/mapper/**/*.ts\" --project build_tsconfig.json --type-check",
     "test": "jest",
     "tdd": "npm test -- --watch",
     "coverage": "npm test -- --coverage --no-cache",

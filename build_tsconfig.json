@@ -1,7 +1,8 @@
 {
 	"compilerOptions": {
-    "allowJs": true,
+		"baseUrl": "",
 		"experimentalDecorators": true,
+		"lib": ["es6", "dom"],
 		"module": "commonjs",
 		"target": "es5",
 		"moduleResolution": "node",
@@ -18,7 +19,11 @@
       "@types/lodash"
 		]
 	},
+  "include": [
+    "src"
+  ],
 	"exclude": [
-		"node_modules"
+		"node_modules",
+    "src/tests"
 	]
 }
