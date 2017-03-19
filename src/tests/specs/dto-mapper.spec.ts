@@ -15,9 +15,9 @@ import {
   ClassWithDefaultDecoratorAndRequiredNestedProperty,
   ClassWithDefaultDecoratorAndRequiredProperty,
   ClassWithDefaultDecoratorOptionalPropertyWithTransformFrom,
-  ClassWithDefaultDecoratorOptionalPropertyWithTransformToSource,
+  ClassWithDefaultDecoratorOptionalPropertiesWithOnToDto,
   ClassWithDefaultDecoratorRequiredPropertyWithTransformFrom,
-  ClassWithDefaultDecoratorRequiredPropertyWithTransformToSource,
+  ClassWithDefaultDecoratorRequiredPropertiesWithOnToDto,
   ClassWithKeepOriginal,
   ClassWithKeepOriginalAndRequiredAndOptionalNestedProperties,
   ClassWithKeepOriginalAndRequiredAndOptionalProperties
@@ -303,7 +303,7 @@ describe( 'Mapper', () => {
 
     it( 'should apply transformation function on to source mapping', () => {
       mappedInstance = DtoMapper.fromDto(
-        ClassWithDefaultDecoratorRequiredPropertyWithTransformToSource, sourceWithNestedFibs );
+        ClassWithDefaultDecoratorRequiredPropertiesWithOnToDto, sourceWithNestedFibs );
       const result = DtoMapper.toDto( mappedInstance );
 
       expect( result[ 'five' ] ).toEqual( 1 );
@@ -312,7 +312,7 @@ describe( 'Mapper', () => {
 
     it( 'should apply transformation function on to source mapping', () => {
       mappedInstance = DtoMapper.fromDto(
-        ClassWithDefaultDecoratorOptionalPropertyWithTransformToSource, sourceWithNestedFibs );
+        ClassWithDefaultDecoratorOptionalPropertiesWithOnToDto, sourceWithNestedFibs );
       const result = DtoMapper.toDto( mappedInstance );
 
       expect( result[ 'seven' ] ).toEqual( 28 );

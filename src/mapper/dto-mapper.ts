@@ -97,7 +97,7 @@ function shouldBeExcluded( propertyExclusionValue, metaOptionsExclusionFlag ) {
 }
 
 function applyTransformToSource( name: string, meta: MappingInfo, value: any ): any {
-  const transform = meta.transformsToSource[ name ] || ( v => v );
+  const transform = meta.onToDtoTransforms[ name ] || ( v => v );
   return transform( value );
 }
 

@@ -1,4 +1,4 @@
-import { TransformOnToSource } from '../mapper/transform-on-to-source.decorator';
+import { OnToDto } from '../mapper/on-to-dto.decorator';
 import { OnFromDto } from '../mapper/on-from-dto.decorator';
 import { OptionalProperty } from '../mapper/optional-property.decorator';
 import { RequiredProperty } from '../mapper/required-property.decorator';
@@ -63,13 +63,13 @@ export class ClassWithDefaultDecoratorRequiredPropertyWithTransformFrom {
 }
 
 @DtoMappable()
-export class ClassWithDefaultDecoratorRequiredPropertyWithTransformToSource {
+export class ClassWithDefaultDecoratorRequiredPropertiesWithOnToDto {
   @RequiredProperty( { path: 'five' } )
-  @TransformOnToSource( v => v / 5 )
+  @OnToDto( v => v / 5 )
   ten;
 
   @RequiredProperty( { path: 'numbers' } )
-  @TransformOnToSource( v => v.map( x => x / 3 ) )
+  @OnToDto( v => v.map( x => x / 3 ) )
   odds;
 }
 
@@ -85,13 +85,13 @@ export class ClassWithDefaultDecoratorOptionalPropertyWithTransformFrom {
 }
 
 @DtoMappable()
-export class ClassWithDefaultDecoratorOptionalPropertyWithTransformToSource {
+export class ClassWithDefaultDecoratorOptionalPropertiesWithOnToDto {
   @OptionalProperty( { path: 'seven' } )
-  @TransformOnToSource( v => v * 4 )
+  @OnToDto( v => v * 4 )
   twentyOne;
 
   @OptionalProperty( { path: 'numbers' } )
-  @TransformOnToSource( v => v.map( x => x * 6 ) )
+  @OnToDto( v => v.map( x => x * 6 ) )
   evens;
 }
 

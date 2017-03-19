@@ -19,6 +19,6 @@ export function getFromDtoTransforms( source ) {
   return getMappingInfo( source ).onFromDtoTransforms;
 }
 
-export function getTransformsToSource( source ) {
-  return getMappingInfo( source ).transformsToSource;
+export function getOnToDtoTransforms( source ) {
+  return getMappingInfo( source ).onToDtoTransforms;
 }

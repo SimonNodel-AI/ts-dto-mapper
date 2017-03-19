@@ -76,10 +76,10 @@ export interface MappingInfo {
   onFromDtoTransforms?: { [name: string ]: (v: any) => any };
 
   /**
-   * Functor storage for transforming to source property value during mapping
+   * Functor storage for transforming property value during mapping toDto
    *
-   * @type {{ [name: string ]: TransformOnFrom }}
+   * @type {{ [name: string ]: onToDtoTransforms }}
    * @memberOf MappingInfo
    */
-  transformsToSource?: { [name: string ]: (v: any) => any };
+  onToDtoTransforms?: { [name: string ]: (v: any) => any };
 }
