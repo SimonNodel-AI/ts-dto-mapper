@@ -1,16 +1,16 @@
 {
-  "name": "typescript-object-mapper",
+  "name": "ts-dto-mapper",
   "version": "0.7.0",
   "description": "Library for converting server side DTO objects to client side",
   "author": "Simon Nodel",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SimonNodel-AI/typescript-object-mapper.git"
+    "url": "git+https://github.com/SimonNodel-AI/ts-dto-mapper.git"
   },
   "bugs": {
-    "url": "https://github.com/SimonNodel-AI/typescript-object-mapper/issues"
+    "url": "https://github.com/SimonNodel-AI/ts-dto-mapper/issues"
   },
-  "homepage": "https://github.com/SimonNodel-AI/typescript-object-mapper#readme",
+  "homepage": "https://github.com/SimonNodel-AI/ts-dto-mapper#readme",
   "keywords": [
     "typescript",
     "library",
@@ -28,7 +28,6 @@
     "test": "jest",
     "tdd": "npm test -- --watch",
     "coverage": "npm test -- --coverage --no-cache",
-    "coverage:watch": "npm run coverage -- --watch",
     "prerelease": "npm run build && npm test",
     "release": "standard-version && npm pack"
   },
