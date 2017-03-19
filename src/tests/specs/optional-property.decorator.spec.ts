@@ -1,5 +1,5 @@
-import { getOptionalProperties } from './helpers';
-import { OptionalProperty } from '../optional-property.decorator';
+import { getOptionalProperties } from '../helpers';
+import { OptionalProperty } from '../../mapper/optional-property.decorator';
 
 class OptionalPropertyTest {
   @OptionalProperty( { path: 'boom' } )

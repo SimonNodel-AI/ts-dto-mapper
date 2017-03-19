@@ -1,8 +1,8 @@
-import { getTransformsFrom } from './helpers';
-import { TransformOnFrom } from '../transform-on-from.decorator';
-import { Mapping } from '../mapping.decorator';
-import { OptionalProperty } from '../optional-property.decorator';
-import { RequiredProperty } from '../required-property.decorator';
+import { getTransformsFrom } from '../helpers';
+import { TransformOnFrom } from '../../mapper/transform-on-from.decorator';
+import { Mapping } from '../../mapper/mapping.decorator';
+import { OptionalProperty } from '../../mapper/optional-property.decorator';
+import { RequiredProperty } from '../../mapper/required-property.decorator';
 
 const doubler = v => v * 2;
 

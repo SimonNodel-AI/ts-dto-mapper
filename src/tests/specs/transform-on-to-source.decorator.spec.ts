@@ -1,8 +1,8 @@
-import { TransformOnToSource } from '../transform-on-to-source.decorator';
-import { getTransformsToSource } from './helpers';
-import { Mapping } from '../mapping.decorator';
-import { OptionalProperty } from '../optional-property.decorator';
-import { RequiredProperty } from '../required-property.decorator';
+import { TransformOnToSource } from '../../mapper/transform-on-to-source.decorator';
+import { getTransformsToSource } from '../helpers';
+import { Mapping } from '../../mapper/mapping.decorator';
+import { OptionalProperty } from '../../mapper/optional-property.decorator';
+import { RequiredProperty } from '../../mapper/required-property.decorator';
 
 const addThree = v => v + 3;
 

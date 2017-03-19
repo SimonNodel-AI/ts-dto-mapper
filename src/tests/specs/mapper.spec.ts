@@ -1,11 +1,10 @@
-import { RequiredPropertyOptions } from '../interfaces/required-property-options.interface';
-import { MappingOptions } from '../interfaces/mapping-options.interface';
-import { setupTestingRouter } from '@angular/router/testing';
-import { RequiredProperty } from '../required-property.decorator';
-import { getMappingInfo } from '../utils';
-import { MappingMeta } from '../interfaces/mapping-meta.interface';
-import { Mapping } from '../mapping.decorator';
-import { Mapper } from '../mapper';
+import { RequiredPropertyOptions } from '../../mapper/interfaces/required-property-options.interface';
+import { MappingOptions } from '../../mapper/interfaces/mapping-options.interface';
+import { RequiredProperty } from '../../mapper/required-property.decorator';
+import { getMappingInfo } from '../../mapper/utils';
+import { MappingMeta } from '../../mapper/interfaces/mapping-meta.interface';
+import { Mapping } from '../../mapper/mapping.decorator';
+import { Mapper } from '../../mapper/mapper';
 import {
   ClassWithDefaultDecorator,
   ClassWithDefaultDecoratorAndOptionalNestedProperty,
@@ -22,7 +21,7 @@ import {
   ClassWithKeepOriginal,
   ClassWithKeepOriginalAndRequiredAndOptionalNestedProperties,
   ClassWithKeepOriginalAndRequiredAndOptionalProperties
-} from './mapper.test-classes';
+} from '../mapper.test-classes';
 
 const sourceWithNestedFibs = {
   uno: 'one',
@@ -119,7 +118,7 @@ describe( 'Mapper', () => {
     } );
 
     describe( 'OptionalProperties', () => {
-
+      
       it( 'should assign correct value from source', () => {
         const mappedInstance = Mapper.from( ClassWithDefaultDecoratorAndOptionalProperty, sourceWithNestedFibs );
 

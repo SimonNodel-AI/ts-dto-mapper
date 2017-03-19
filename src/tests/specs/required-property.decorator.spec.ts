@@ -1,5 +1,5 @@
-import { getRequiredProperties } from './helpers';
-import { RequiredProperty } from '../required-property.decorator';
+import { getRequiredProperties } from '../helpers';
+import { RequiredProperty } from '../../mapper/required-property.decorator';
 
 class RequiredPropertyTest {
   @RequiredProperty( { path: 'boom' })

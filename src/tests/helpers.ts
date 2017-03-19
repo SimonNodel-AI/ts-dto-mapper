@@ -1,10 +1,10 @@
-import { getMappingInfo } from '../utils';
-import { MappingInfo } from '../interfaces/mapping-info.interface';
-import { MappingMeta } from '../interfaces/mapping-meta.interface';
+import { getMappingInfo } from '../mapper/utils';
+import { MappingInfo } from '../mapper/interfaces/mapping-info.interface';
+import { MappingMeta } from '../mapper/interfaces/mapping-meta.interface';
 
 export function createDecoratedInstance( decorator, constructorToBeDecorated ): MappingMeta {
   const decoratedConstructor = decorator( constructorToBeDecorated );
-  return new decoratedConstructor();
+  return new decoratedConstructor();    
 };
 
 export function getRequiredProperties( source ) {

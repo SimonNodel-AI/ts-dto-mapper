@@ -1,8 +1,8 @@
-import { TransformOnToSource } from '../transform-on-to-source.decorator';
-import { TransformOnFrom } from '../transform-on-from.decorator';
-import { OptionalProperty } from '../optional-property.decorator';
-import { RequiredProperty } from '../required-property.decorator';
-import { Mapping } from '../mapping.decorator';
+import { TransformOnToSource } from '../mapper/transform-on-to-source.decorator';
+import { TransformOnFrom } from '../mapper/transform-on-from.decorator';
+import { OptionalProperty } from '../mapper/optional-property.decorator';
+import { RequiredProperty } from '../mapper/required-property.decorator';
+import { Mapping } from '../mapper/mapping.decorator';
 
 @Mapping()
 export class ClassWithDefaultDecorator {

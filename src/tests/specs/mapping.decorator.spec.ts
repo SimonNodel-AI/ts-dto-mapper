@@ -1,14 +1,14 @@
-import { getMappingInfo } from '../utils';
-import { createDecoratedInstance } from './helpers';
+import { getMappingInfo } from '../../mapper/utils';
+import { createDecoratedInstance } from '../helpers';
 import {
   Mapping
-} from '../mapping.decorator';
+} from '../../mapper/mapping.decorator';
 import {
   MappingOptions
-} from '../interfaces/mapping-options.interface';
+} from '../../mapper/interfaces/mapping-options.interface';
 import {
   MappingMeta
-} from '../interfaces/mapping-meta.interface';
+} from '../../mapper/interfaces/mapping-meta.interface';
 
 
 describe( 'Mapping', () => {
@@ -31,7 +31,7 @@ describe( 'Mapping', () => {
       const mappingInfo = getMappingInfo( mappedInstance );
 
       expect( mappingInfo ).toBeDefined();
-      expect( mappingInfo.name ).toBe( testFunction.name );
+      expect( mappingInfo.name ).toBe( testFunction['name'] );
       expect( mappingInfo.options ).toBeDefined();
       expect( mappingInfo.options.keepOriginal ).toBe( false );
       expect( mappingInfo.options.excludeIfNull ).toBe( false );
