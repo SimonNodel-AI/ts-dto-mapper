@@ -1,6 +1,7 @@
 {
 	"compilerOptions": {
 		"baseUrl": "",
+    "allowJs": true,
 		"experimentalDecorators": true,
 		"lib": ["es6", "dom"],
 		"module": "commonjs",
