@@ -14,9 +14,9 @@ import {
   ClassWithDefaultDecoratorAndReadOnlyProperties,
   ClassWithDefaultDecoratorAndRequiredNestedProperty,
   ClassWithDefaultDecoratorAndRequiredProperty,
-  ClassWithDefaultDecoratorOptionalPropertyWithTransformFrom,
+  ClassWithDefaultDecoratorOptionalPropertiesWithOnFromDto,
   ClassWithDefaultDecoratorOptionalPropertiesWithOnToDto,
-  ClassWithDefaultDecoratorRequiredPropertyWithTransformFrom,
+  ClassWithDefaultDecoratorRequiredPropertiesWithOnFromDto,
   ClassWithDefaultDecoratorRequiredPropertiesWithOnToDto,
   ClassWithKeepOriginal,
   ClassWithKeepOriginalAndRequiredAndOptionalNestedProperties,
@@ -108,7 +108,7 @@ describe( 'Mapper', () => {
 
       it( 'should apply transformation function on from mapping', () => {
         const mappedInstance = DtoMapper.fromDto(
-          ClassWithDefaultDecoratorRequiredPropertyWithTransformFrom, sourceWithNestedFibs );
+          ClassWithDefaultDecoratorRequiredPropertiesWithOnFromDto, sourceWithNestedFibs );
 
         expect( mappedInstance.ten ).toEqual( 10 );
         expect( mappedInstance.odds ).toEqual( [ 27, 99 ] );
@@ -155,7 +155,7 @@ describe( 'Mapper', () => {
 
       it( 'should apply transformation function on from mapping', () => {
         const mappedInstance = DtoMapper.fromDto(
-          ClassWithDefaultDecoratorOptionalPropertyWithTransformFrom, sourceWithNestedFibs );
+          ClassWithDefaultDecoratorOptionalPropertiesWithOnFromDto, sourceWithNestedFibs );
 
         expect( mappedInstance.twentyOne ).toEqual( 21 );
         expect( mappedInstance.evens ).toEqual( [ 36, 132 ] );

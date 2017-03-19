@@ -52,7 +52,7 @@ export class ClassWithDefaultDecoratorAndReadOnlyProperties {
 }
 
 @DtoMappable()
-export class ClassWithDefaultDecoratorRequiredPropertyWithTransformFrom {
+export class ClassWithDefaultDecoratorRequiredPropertiesWithOnFromDto {
   @RequiredProperty( { path: 'five' } )
   @OnFromDto( v => v * 2 )
   ten;
@@ -74,7 +74,7 @@ export class ClassWithDefaultDecoratorRequiredPropertiesWithOnToDto {
 }
 
 @DtoMappable()
-export class ClassWithDefaultDecoratorOptionalPropertyWithTransformFrom {
+export class ClassWithDefaultDecoratorOptionalPropertiesWithOnFromDto {
   @OptionalProperty( { path: 'seven' } )
   @OnFromDto( v => v * 3 )
   twentyOne;
